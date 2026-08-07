@@ -33,7 +33,7 @@ jobs:
             android:
               - 'android/**'
 
-       - name: Run Core Test
+      - name: Run Core Test
         if: steps.changes.outputs.core == 'true'
         run: |
           cd core
