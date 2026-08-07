@@ -1,0 +1,55 @@
+plugins {
+    alias(libs.plugins.android.application) apply true
+}
+
+android {
+    signingConfigs {
+        mainSign {
+            storeFile file('sign.keystore')
+            storePassword '123456'
+            keyAlias = 'demo'
+            keyPassword '123456'
+        }
+    }
+    compileSdkVersion libs.versions.compileSdk.get() as Integer
+    ndkVersion libs.versions.ndk.get() as String
+    namespace libs.versions.packageName.get() as String
+
+    defaultConfig {
+		    applicationId libs.versions.packageName.get() as String
+		    minSdkVersion libs.versions.minSdk.get() as Integer
+		    targetSdkVersion libs.versions.targetSdk.get() as Integer
+		    versionCode libs.versions.versionCode.get() as Integer
+		    versionName libs.versions.versionName.get() as String
+		    signingConfig signingConfigs.mainSign
+		    multiDexEnabled true
+				proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+				
+				shaders {
+            glslcArgs.addAll(['-c', '-g'])
+        }
+		}
+		buildTypes {
+				release {
+						minifyEnabled true
+						shrinkResources true
+				}
+				debug {
+				    applicationIdSuffix = ".debug"
+						debuggable true
+            testCoverageEnabled true
+				}
+		}
+    sourceSets {
+        main.shaders.srcDirs = ['shaders']
+    }
+    externalNativeBuild {
+        cmake.path 'CMakeLists.txt'
+    }
+    compileOptions {
+				sourceCompatibility JavaVersion.VERSION_18
+				targetCompatibility JavaVersion.VERSION_18
+    }
+}
+
+dependencies {}
