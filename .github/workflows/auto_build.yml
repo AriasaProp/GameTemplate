@@ -12,15 +12,11 @@ on:
       - '.github/workflows/auto_build.yml'
       - 'core/**'
       - 'android/**'
-      - 'linux/**'
-      - 'windows/**'
 
 jobs:
   format-core:
     runs-on: ubuntu-latest
     outputs:
-      windows: ${{ steps.changes.outputs.windows }}
-      linux: ${{ steps.changes.outputs.linux }}
       android: ${{ steps.changes.outputs.android }}
       core: ${{ steps.changes.outputs.core }}
     steps:
@@ -36,10 +32,6 @@ jobs:
               - 'core/**'
             android:
               - 'android/**'
-            linux:
-              - 'linux/**'
-            windows:
-              - 'windows/**'
 
        - name: Run Core Test
         if: steps.changes.outputs.core == 'true'
@@ -90,19 +82,3 @@ jobs:
           if-no-files-found: error
           overwrite: true
           path: android/build/outputs/apk/**/*.apk
-
-  linux:
-    runs-on: ubuntu-latest
-    needs: format-core
-    if: github.event_name == 'workflow_dispatch' || needs.format-core.outputs.linux == 'true' || needs.format-core.outputs.core == 'true'
-    steps:
-      - name: Do Nothing
-        run: echo "Do Nothing"
-
-  windows:
-    runs-on: windows-latest
-    needs: format-core
-    if: github.event_name == 'workflow_dispatch' || needs.format-core.outputs.windows == 'true' || needs.format-core.outputs.core == 'true'
-    steps:
-      - name: Do Nothing
-        run: echo "Do Nothing"
