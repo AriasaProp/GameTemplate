@@ -63,8 +63,11 @@
   #error "unknown Compiler action"
 #endif
 
-
-#if __has_builtin(__builtin_expect)
+#ifdef __cplusplus
+  #define IS_ERROR(x) if (x) [unlikely]
+  #define LIKELY(x)   likely(x)
+  #define UNLIKELY(x) unlikely(x)
+#elif __has_builtin(__builtin_expect)
   #define IS_ERROR(x) if (__builtin_expect(!!(x), 0))
   #define LIKELY(x)   __builtin_expect(!!(x), 1)
   #define UNLIKELY(x) __builtin_expect(!!(x), 0)
@@ -97,17 +100,6 @@ typedef union {
   } u16;
   uint32_t u32;
 } icolor; // packed color bit
-
-
-#define FCOLOR_ZERO   (fcolor){.r = 0.f, .g = 0.f, .b = 0.f, .a = 0.f}
-#define FCOLOR_RED    (fcolor){.r = 1.f, .g = 0.f, .b = 0.f, .a = 1.f}
-#define FCOLOR_GREEN  (fcolor){.g = 1.f, .r = 0.f, .b = 0.f, .a = 1.f}
-#define FCOLOR_BLUE   (fcolor){.b = 1.f, .r = 0.f, .g = 0.f, .a = 1.f}
-
-#define ICOLOR_ZERO   (icolor){.u32 = 0}
-#define ICOLOR_RED    (icolor){.u8.r = 0xff, .u8.g = 0, u8.b = 0, u8.a = 0xff}
-#define ICOLOR_GREEN  (icolor){.u8.g = 0xff, .u8.r = 0, u8.b = 0, u8.a = 0xff}
-#define ICOLOR_BLUE   (icolor){.u8.b = 0xff, .u8.r = 0, u8.g = 0, u8.a = 0xff}
 
 // ===============================
 //  Function

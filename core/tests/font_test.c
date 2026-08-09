@@ -1,3 +1,4 @@
+#include "common.h"
 #include "console_util.h"
 #include "stb/truetype.h"
 #include "stb/rectpack.h"
@@ -23,7 +24,7 @@
 #define LAST_CHAR 0x7f
 #define LENGTH_CHAR (LAST_CHAR - FIRST_CHAR + 1)
 
-int main(int,char**) {
+int main(int UNUSED_ARG(argc),char**UNUSED_ARG(argv)) {
   struct stat stbuff;
   int result = EXIT_FAILURE;
   uint8_t *mttf;

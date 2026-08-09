@@ -21,7 +21,9 @@
 #define BOLDCYAN    "\033[1m\033[36m" /* Bold Cyan */
 #define BOLDWHITE   "\033[1m\033[37m" /* Bold White */
 
-#define PRINT_INF(...) fprintf(stdout, CYAN "[INF] " RESET __VA_ARGS__)
-#define PRINT_ERR(...) fprintf(stderr, RED  "[ERR] " RESET __VA_ARGS__)
+#define PRINT_LOG(...) fprintf(stdout, CYAN   "[LOG] " RESET __VA_ARGS__ "\n")
+#define PRINT_INF(...) fprintf(stdout, WHITE  "[INF] " RESET __VA_ARGS__ "\n")
+#define PRINT_WRN(...) fprintf(stdout, YELLOW "[WRN] " RESET __VA_ARGS__ " at " __FILE__ ":" __LINE__ "\n")
+#define PRINT_ERR(...) fprintf(stderr, RED    "[ERR] " RESET __VA_ARGS__ " at " __FILE__ ":" __LINE__ "\n")
 
 #endif // CONSOLE_UTIL_INCLUDED_
