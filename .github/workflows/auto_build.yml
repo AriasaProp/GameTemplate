@@ -34,7 +34,7 @@ jobs:
               - 'android/**'
 
       - name: Run Core Test
-        workspace: core
+        working-directory: core
         if: steps.changes.outputs.core == 'true'
         run: (cc -o run/build run/build.c) && (run/build test)
 
