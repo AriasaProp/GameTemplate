@@ -6,7 +6,7 @@ compileSdk = "34"
 targetSdk = "34"
 minSdk = "25"
 ndk = "28.2.13676358"
-packageName = "com.ariasaproject.technowar"
+packageName = "com.ariasaproject.gametemplate"
 versionCode = "1"
 versionName = "0"
 

@@ -1,3 +1,6 @@
+# ignore generated binary  
+core/bin
+core/run/build.old
+core/run/build
 android/.gradle
 android/build
-core/bin
