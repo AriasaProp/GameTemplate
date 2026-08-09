@@ -59,6 +59,15 @@
 !_TAG_KIND_DESCRIPTION!D	v,variable	/variable definitions/
 !_TAG_KIND_DESCRIPTION!DosBatch	l,label	/labels/
 !_TAG_KIND_DESCRIPTION!DosBatch	v,variable	/variables/
+!_TAG_KIND_DESCRIPTION!HTML	C,stylesheet	/stylesheets/
+!_TAG_KIND_DESCRIPTION!HTML	I,id	/identifiers/
+!_TAG_KIND_DESCRIPTION!HTML	J,script	/scripts/
+!_TAG_KIND_DESCRIPTION!HTML	a,anchor	/named anchors/
+!_TAG_KIND_DESCRIPTION!HTML	c,class	/classes/
+!_TAG_KIND_DESCRIPTION!HTML	h,heading1	/H1 headings/
+!_TAG_KIND_DESCRIPTION!HTML	i,heading2	/H2 headings/
+!_TAG_KIND_DESCRIPTION!HTML	j,heading3	/H3 headings/
+!_TAG_KIND_DESCRIPTION!HTML	t,title	/titles/
 !_TAG_KIND_DESCRIPTION!Java	a,annotation	/annotation declarations/
 !_TAG_KIND_DESCRIPTION!Java	c,class	/classes/
 !_TAG_KIND_DESCRIPTION!Java	e,enumConstant	/enum constants/
@@ -93,6 +102,7 @@
 !_TAG_PARSER_VERSION!CMake	0.0	/current.age/
 !_TAG_PARSER_VERSION!D	0.0	/current.age/
 !_TAG_PARSER_VERSION!DosBatch	0.0	/current.age/
+!_TAG_PARSER_VERSION!HTML	0.0	/current.age/
 !_TAG_PARSER_VERSION!Java	0.0	/current.age/
 !_TAG_PARSER_VERSION!JavaProperties	0.0	/current.age/
 !_TAG_PARSER_VERSION!Markdown	1.1	/current.age/
@@ -118,6 +128,9 @@
 !_TAG_ROLE_DESCRIPTION!C++!module	imported	/imported with "imported ..."/
 !_TAG_ROLE_DESCRIPTION!C++!module	partOwner	/used for specifying a partition/
 !_TAG_ROLE_DESCRIPTION!C++!partition	imported	/imported with "imported ..."/
+!_TAG_ROLE_DESCRIPTION!HTML!class	attribute	/assigned as attributes/
+!_TAG_ROLE_DESCRIPTION!HTML!script	extFile	/referenced as external files/
+!_TAG_ROLE_DESCRIPTION!HTML!stylesheet	extFile	/referenced as external files/
 !_TAG_ROLE_DESCRIPTION!Java!package	imported	/imported package/
 !_TAG_ROLE_DESCRIPTION!Sh!heredoc	endmarker	/end marker/
 !_TAG_ROLE_DESCRIPTION!Sh!script	loaded	/loaded/
@@ -154,28 +167,25 @@ AType	android/c/vulkan_core.h	/^  VkComponentTypeNV AType;$/;"	m	struct:VkCooper
 ActionFlags_DebugRun	core/run/build.c	/^  ActionFlags_DebugRun,$/;"	e	enum:__anon2c23c1e20103	file:
 ActionFlags_ForceBuild	core/run/build.c	/^  ActionFlags_ForceBuild,$/;"	e	enum:__anon2c23c1e20103	file:
 BIN_DIR	core/run/build.c	/^#define  BIN_DIR /;"	d	file:
-BLACK	core/tools/console_util.h	/^#define BLACK /;"	d
-BLUE	core/tools/console_util.h	/^#define BLUE /;"	d
-BOLDBLACK	core/tools/console_util.h	/^#define BOLDBLACK /;"	d
-BOLDBLUE	core/tools/console_util.h	/^#define BOLDBLUE /;"	d
-BOLDCYAN	core/tools/console_util.h	/^#define BOLDCYAN /;"	d
-BOLDGREEN	core/tools/console_util.h	/^#define BOLDGREEN /;"	d
-BOLDMAGENTA	core/tools/console_util.h	/^#define BOLDMAGENTA /;"	d
-BOLDRED	core/tools/console_util.h	/^#define BOLDRED /;"	d
-BOLDWHITE	core/tools/console_util.h	/^#define BOLDWHITE /;"	d
-BOLDYELLOW	core/tools/console_util.h	/^#define BOLDYELLOW /;"	d
+BLACK	core/main/console_util.h	/^#define BLACK /;"	d
+BLUE	core/main/console_util.h	/^#define BLUE /;"	d
+BOLDBLACK	core/main/console_util.h	/^#define BOLDBLACK /;"	d
+BOLDBLUE	core/main/console_util.h	/^#define BOLDBLUE /;"	d
+BOLDCYAN	core/main/console_util.h	/^#define BOLDCYAN /;"	d
+BOLDGREEN	core/main/console_util.h	/^#define BOLDGREEN /;"	d
+BOLDMAGENTA	core/main/console_util.h	/^#define BOLDMAGENTA /;"	d
+BOLDRED	core/main/console_util.h	/^#define BOLDRED /;"	d
+BOLDWHITE	core/main/console_util.h	/^#define BOLDWHITE /;"	d
+BOLDYELLOW	core/main/console_util.h	/^#define BOLDYELLOW /;"	d
 BType	android/c/vulkan_core.h	/^  VkComponentTypeKHR BType;$/;"	m	struct:VkCooperativeMatrixFlexibleDimensionsPropertiesNV	typeref:typename:VkComponentTypeKHR
 BType	android/c/vulkan_core.h	/^  VkComponentTypeKHR BType;$/;"	m	struct:VkCooperativeMatrixPropertiesKHR	typeref:typename:VkComponentTypeKHR
 BType	android/c/vulkan_core.h	/^  VkComponentTypeNV BType;$/;"	m	struct:VkCooperativeMatrixPropertiesNV	typeref:typename:VkComponentTypeNV
-BUFFER_SIZE64	core/tools/codec/image.c	/^#define BUFFER_SIZE64 /;"	d	file:
 BitDepth	android/c/vk_video/vulkan_video_codec_av1std.h	/^  uint8_t BitDepth;$/;"	m	struct:StdVideoAV1ColorConfig	typeref:typename:uint8_t
 BitDepth	android/c/vk_video/vulkan_video_codec_vp9std.h	/^  uint8_t BitDepth;$/;"	m	struct:StdVideoVP9ColorConfig	typeref:typename:uint8_t
 CALLVK	android/c/vulkan_wrapper.c	/^#define CALLVK(/;"	d	file:
 CASE_ACT	core/run/build.c	/^#define CASE_ACT(/;"	d	file:
 CAST	core/main/common.h	/^  #define CAST(/;"	d
 CDECL	core/main/common.h	/^  #define CDECL /;"	d
-CHUNK_NEED	core/tools/codec/image.c	/^#define CHUNK_NEED(/;"	d	file:
-CHUNK_NOT	core/tools/codec/image.c	/^#define CHUNK_NOT(/;"	d	file:
 CIRCLE_PRECISION	core/main/game_logic_example.c	/^#define CIRCLE_PRECISION /;"	d	file:
 CLAMP	core/main/common.h	/^#define CLAMP(/;"	d
 CLIT	core/run/nob.h	/^        #define CLIT NOB_CLIT$/;"	d
@@ -183,19 +193,14 @@ CMAKE_COMPILE_WARNING_AS_ERROR	android/CMakeLists.txt	/^set(CMAKE_COMPILE_WARNIN
 CMAKE_C_EXTENSION	android/CMakeLists.txt	/^set(CMAKE_C_EXTENSION OFF)$/;"	v
 CMAKE_C_STANDARD	android/CMakeLists.txt	/^set(CMAKE_C_STANDARD 23)$/;"	v
 CMAKE_C_STANDARD_REQUIRED	android/CMakeLists.txt	/^set(CMAKE_C_STANDARD_REQUIRED ON)$/;"	v
-CODEC_IMAGE_IMPLEMENTATIONS_	core/tools/codec/image.c	/^#define CODEC_IMAGE_IMPLEMENTATIONS_$/;"	d	file:
-CODEC_INCLUDED_	core/tools/codec/codec.h	/^#define CODEC_INCLUDED_$/;"	d
-COMBO	core/tools/codec/image.c	/^#define COMBO(/;"	d	file:
 COMMON_SRC	core/run/build.c	/^#define COMMON_SRC /;"	d	file:
 COMPILE_WARNING_AS_ERROR	android/CMakeLists.txt	/^set(COMPILE_WARNING_AS_ERROR ON)$/;"	v
-CONSOLE_UTIL_INCLUDED_	core/tools/console_util.h	/^#define CONSOLE_UTIL_INCLUDED_$/;"	d
+CONSOLE_UTIL_INCLUDED_	core/main/console_util.h	/^#define CONSOLE_UTIL_INCLUDED_$/;"	d
 CORE_SRC	android/CMakeLists.txt	/^set(CORE_SRC "${CMAKE_CURRENT_SOURCE_DIR}\/..\/core\/main")$/;"	v
-CRC_APPEND	core/tools/codec/image.c	/^#define CRC_APPEND(/;"	d	file:
-CRC_APPENDS	core/tools/codec/image.c	/^#define CRC_APPENDS(/;"	d	file:
 CType	android/c/vulkan_core.h	/^  VkComponentTypeKHR CType;$/;"	m	struct:VkCooperativeMatrixFlexibleDimensionsPropertiesNV	typeref:typename:VkComponentTypeKHR
 CType	android/c/vulkan_core.h	/^  VkComponentTypeKHR CType;$/;"	m	struct:VkCooperativeMatrixPropertiesKHR	typeref:typename:VkComponentTypeKHR
 CType	android/c/vulkan_core.h	/^  VkComponentTypeNV CType;$/;"	m	struct:VkCooperativeMatrixPropertiesNV	typeref:typename:VkComponentTypeNV
-CYAN	core/tools/console_util.h	/^#define CYAN /;"	d
+CYAN	core/main/console_util.h	/^#define CYAN /;"	d
 Chain	core/run/nob.h	/^        #define Chain Nob_Chain$/;"	d
 Chain_Begin_Opt	core/run/nob.h	/^        #define Chain_Begin_Opt Nob_Chain_Begin_Opt$/;"	d
 Chain_Cmd_Opt	core/run/nob.h	/^        #define Chain_Cmd_Opt Nob_Chain_Cmd_Opt$/;"	d
@@ -382,12 +387,7 @@ EGLuint64KHR	android/c/opengles_wrapper.c	/^typedef khronos_uint64_t EGLuint64KH
 EGLuint64NV	android/c/opengles_wrapper.c	/^typedef khronos_utime_nanoseconds_t EGLuint64NV;$/;"	t	typeref:typename:khronos_utime_nanoseconds_t	file:
 ENGINE_INCLUDED_	core/main/engine.h	/^#define ENGINE_INCLUDED_$/;"	d
 ERROR	core/run/nob.h	/^        #define ERROR NOB_ERROR$/;"	d
-ERROR_PNG	core/tools/codec/image.c	/^#define ERROR_PNG(/;"	d	file:
 FAST_BITS	core/ext/stb/image_read.c	/^#define FAST_BITS /;"	d	file:
-FCOLOR_BLUE	core/main/common.h	/^#define FCOLOR_BLUE /;"	d
-FCOLOR_GREEN	core/main/common.h	/^#define FCOLOR_GREEN /;"	d
-FCOLOR_RED	core/main/common.h	/^#define FCOLOR_RED /;"	d
-FCOLOR_ZERO	core/main/common.h	/^#define FCOLOR_ZERO /;"	d
 FILE_DIRECTORY	core/run/nob.h	/^        #define FILE_DIRECTORY NOB_FILE_DIRECTORY$/;"	d
 FILE_OTHER	core/run/nob.h	/^        #define FILE_OTHER NOB_FILE_OTHER$/;"	d
 FILE_REGULAR	core/run/nob.h	/^        #define FILE_REGULAR NOB_FILE_REGULAR$/;"	d
@@ -1249,30 +1249,18 @@ GO_REBUILD_URSELF_PLUS	core/run/nob.h	/^        #define GO_REBUILD_URSELF_PLUS N
 GRAPHICS_CLEAR_COLOR	core/main/engine.h	/^  GRAPHICS_CLEAR_COLOR = 1,$/;"	e	enum:__anon44d6a91d0103
 GRAPHICS_CLEAR_DEPTH	core/main/engine.h	/^  GRAPHICS_CLEAR_DEPTH = 2,$/;"	e	enum:__anon44d6a91d0103
 GRAPHICS_CLEAR_STENCIL	core/main/engine.h	/^  GRAPHICS_CLEAR_STENCIL = 4,$/;"	e	enum:__anon44d6a91d0103
-GREEN	core/tools/console_util.h	/^#define GREEN /;"	d
+GREEN	core/main/console_util.h	/^#define GREEN /;"	d
+GREEN	core/run/build.c	/^#define GREEN /;"	d	file:
 GameTemplate	README.md	/^# GameTemplate$/;"	c
-GameTemplatePlugin	android/plugin/src/main/java/org/example/GameTemplatePlugin.java	/^public class GameTemplatePlugin implements Plugin<Project> {$/;"	c
-GameTemplatePluginFunctionalTest	android/plugin/src/functionalTest/java/org/example/GameTemplatePluginFunctionalTest.java	/^class GameTemplatePluginFunctionalTest {$/;"	c
-GameTemplatePluginTest	android/plugin/src/test/java/org/example/GameTemplatePluginTest.java	/^class GameTemplatePluginTest {$/;"	c
 GmType	android/c/vk_video/vulkan_video_codec_av1std.h	/^  uint8_t GmType[STD_VIDEO_AV1_NUM_REF_FRAMES];$/;"	m	struct:StdVideoAV1GlobalMotion	typeref:typename:uint8_t[]
-ICOLOR_BLUE	core/main/common.h	/^#define ICOLOR_BLUE /;"	d
-ICOLOR_GREEN	core/main/common.h	/^#define ICOLOR_GREEN /;"	d
-ICOLOR_RED	core/main/common.h	/^#define ICOLOR_RED /;"	d
-ICOLOR_ZERO	core/main/common.h	/^#define ICOLOR_ZERO /;"	d
-IMAGE_CHANNELS	core/tools/image_pack.c	/^#define IMAGE_CHANNELS /;"	d	file:
-IMAGE_FILES	core/tools/image_pack.c	/^#define IMAGE_FILES /;"	d	file:
-IMAGE_FLIP_Y	core/tools/codec/image.c	/^#define IMAGE_FLIP_Y$/;"	d	file:
-IMAGE_MAX_SIDE	core/tools/image_pack.c	/^#define IMAGE_MAX_SIDE /;"	d	file:
-IMAGE_TGA_WITH_RLE	core/tools/codec/image.c	/^#define IMAGE_TGA_WITH_RLE$/;"	d	file:
+Gradle Configuration Cache	configuration-cache/dzw0tifi10bzs96o80aildhft/adbd5fb6mpaxghs75m3sab3tv/configuration-cache-report.html	/^    <title>Gradle Configuration Cache<\/title>$/;"	j
 INFO	core/run/nob.h	/^        #define INFO NOB_INFO$/;"	d
 INLINE	core/main/common.h	/^  #define INLINE /;"	d
 INPUT_SENSOR_ENABLED	android/c/inputManager.c	/^  INPUT_SENSOR_ENABLED = 1,$/;"	e	enum:inputManagerState	file:
 INVALID_FD	core/run/nob.h	/^        #define INVALID_FD NOB_INVALID_FD$/;"	d
 INVALID_PROC	core/run/nob.h	/^        #define INVALID_PROC NOB_INVALID_PROC$/;"	d
 IPHONE_PNG_TO_RGB	core/ext/stb/image_read.c	/^#define IPHONE_PNG_TO_RGB$/;"	d	file:
-IPHONE_PNG_TO_RGB	core/tools/codec/image.c	/^#define IPHONE_PNG_TO_RGB$/;"	d	file:
 IS_ERROR	core/main/common.h	/^  #define IS_ERROR(/;"	d
-IS_ERROR_PNG	core/tools/codec/image.c	/^#define IS_ERROR_PNG(/;"	d	file:
 IVEC2_IS0	core/main/math/vec.h	/^#define IVEC2_IS0(/;"	d
 IVEC2_NEW	core/main/math/vec.h	/^#define IVEC2_NEW(/;"	d
 IVEC2_SQR	core/main/math/vec.h	/^#define IVEC2_SQR(/;"	d
@@ -1305,10 +1293,11 @@ LOGE	android/c/log.h	/^#define LOGE(/;"	d
 LOGI	android/c/log.h	/^#define LOGI(/;"	d
 LOGW	android/c/log.h	/^#define LOGW(/;"	d
 LOG_TAG	android/c/log.h	/^#define LOG_TAG /;"	d
+Layer_1	configuration-cache/dzw0tifi10bzs96o80aildhft/adbd5fb6mpaxghs75m3sab3tv/configuration-cache-report.html	/^    background-image: url('data:image\/svg+xml;utf8,<svg width="800px" height="800px" viewBox="-/;"	I
 Log_Handler	core/run/nob.h	/^        #define Log_Handler Nob_Log_Handler$/;"	d
 Log_Level	core/run/nob.h	/^        #define Log_Level Nob_Log_Level$/;"	d
 LoopRestorationSize	android/c/vk_video/vulkan_video_codec_av1std.h	/^  uint16_t LoopRestorationSize[STD_VIDEO_AV1_MAX_NUM_PLANES];$/;"	m	struct:StdVideoAV1LoopRestoration	typeref:typename:uint16_t[]
-MAGENTA	core/tools/console_util.h	/^#define MAGENTA /;"	d
+MAGENTA	core/main/console_util.h	/^#define MAGENTA /;"	d
 MANAGER_	android/c/manager.h	/^#define MANAGER_$/;"	d
 MATRIX4_LEN	core/main/math/matrix.c	/^#define MATRIX4_LEN /;"	d	file:
 MATRIX4_SIZE	core/main/math/matrix.c	/^#define MATRIX4_SIZE /;"	d	file:
@@ -2140,8 +2129,10 @@ PIVOT_RIGHT	core/main/uistage.h	/^  PIVOT_RIGHT = 2,$/;"	e	enum:__anon3ea4097901
 PIVOT_TOP	core/main/uistage.h	/^  PIVOT_TOP = 8,$/;"	e	enum:__anon3ea409790103
 PIVOT_VCENTER	core/main/uistage.h	/^  PIVOT_VCENTER = 12,$/;"	e	enum:__anon3ea409790103
 PNG_SIGNATURE	core/ext/stb/local.h	/^#define PNG_SIGNATURE /;"	d
-PRINT_ERR	core/tools/console_util.h	/^#define PRINT_ERR(/;"	d
-PRINT_INF	core/tools/console_util.h	/^#define PRINT_INF(/;"	d
+PRINT_ERR	core/main/console_util.h	/^#define PRINT_ERR(/;"	d
+PRINT_INF	core/main/console_util.h	/^#define PRINT_INF(/;"	d
+PRINT_LOG	core/main/console_util.h	/^#define PRINT_LOG(/;"	d
+PRINT_WRN	core/main/console_util.h	/^#define PRINT_WRN(/;"	d
 PicOrderCnt	android/c/vk_video/vulkan_video_codec_h264std_decode.h	/^  int32_t PicOrderCnt[STD_VIDEO_DECODE_H264_FIELD_ORDER_COUNT_LIST_SIZE];$/;"	m	struct:StdVideoDecodeH264PictureInfo	typeref:typename:int32_t[]
 PicOrderCnt	android/c/vk_video/vulkan_video_codec_h264std_decode.h	/^  int32_t PicOrderCnt[STD_VIDEO_DECODE_H264_FIELD_ORDER_COUNT_LIST_SIZE];$/;"	m	struct:StdVideoDecodeH264ReferenceInfo	typeref:typename:int32_t[]
 PicOrderCnt	android/c/vk_video/vulkan_video_codec_h264std_encode.h	/^  int32_t PicOrderCnt;$/;"	m	struct:StdVideoEncodeH264PictureInfo	typeref:typename:int32_t
@@ -2154,10 +2145,10 @@ Pipe	core/run/nob.h	/^        #define Pipe Nob_Pipe$/;"	d
 PredictorPaletteEntries	android/c/vk_video/vulkan_video_codec_h265std.h	/^  uint16_t PredictorPaletteEntries[STD_VIDEO_H265_PREDICTOR_PALETTE_COMPONENTS_LIST_SIZE][STD_VI/;"	m	struct:StdVideoH265PredictorPaletteEntries	typeref:typename:uint16_t[][]
 Proc	core/run/nob.h	/^        #define Proc Nob_Proc$/;"	d
 Procs	core/run/nob.h	/^        #define Procs Nob_Procs$/;"	d
-READ_PNG	core/tools/codec/image.c	/^#define READ_PNG(X)         READ_PNG_/;"	d	file:
-READ_PNG_ALT	core/tools/codec/image.c	/^#define READ_PNG_ALT(/;"	d	file:
-RED	core/tools/console_util.h	/^#define RED /;"	d
-RESET	core/tools/console_util.h	/^#define RESET /;"	d
+RED	core/main/console_util.h	/^#define RED /;"	d
+RED	core/run/build.c	/^#define RED /;"	d	file:
+RESET	core/main/console_util.h	/^#define RESET /;"	d
+RESET	core/run/build.c	/^#define RESET /;"	d	file:
 RESIZE_DISPLAY	android/c/opengles_wrapper.c	/^  RESIZE_DISPLAY = 1 << 2,$/;"	e	enum:__anon61049fd50303	file:
 RESIZE_ONLY	android/c/opengles_wrapper.c	/^  RESIZE_ONLY = 1 << 3,$/;"	e	enum:__anon61049fd50303	file:
 RLE_IN_TGA	core/ext/stb/image_write.c	/^#define RLE_IN_TGA$/;"	d	file:
@@ -2990,7 +2981,6 @@ UISTAGE_INCLUDE	core/main/uistage.h	/^#define UISTAGE_INCLUDE$/;"	d
 UISTAGE_MAX_ACTORS	core/main/uistage.c	/^#define UISTAGE_MAX_ACTORS /;"	d	file:
 UI_UPDATE	android/c/opengles_wrapper.c	/^  UI_UPDATE = 1,$/;"	e	enum:__anon61049fd50303	file:
 UNLIKELY	core/main/common.h	/^  #define UNLIKELY(/;"	d
-UNPREMULTIPLY_READ	core/tools/codec/image.c	/^#define UNPREMULTIPLY_READ$/;"	d	file:
 UNREACHABLE	core/run/nob.h	/^        #define UNREACHABLE NOB_UNREACHABLE$/;"	d
 UNREACHABLEF	core/run/nob.h	/^        #define UNREACHABLEF NOB_UNREACHABLEF$/;"	d
 UNUSED	core/main/common.h	/^  #define UNUSED(/;"	d
@@ -12105,7 +12095,7 @@ WALK_SKIP	core/run/nob.h	/^        #define WALK_SKIP NOB_WALK_SKIP$/;"	d
 WALK_STOP	core/run/nob.h	/^        #define WALK_STOP NOB_WALK_STOP$/;"	d
 WARNING	core/run/nob.h	/^        #define WARNING NOB_WARNING$/;"	d
 WCRC	core/ext/stb/image_write.c	/^#define WCRC(/;"	d	file:
-WHITE	core/tools/console_util.h	/^#define WHITE /;"	d
+WHITE	core/main/console_util.h	/^#define WHITE /;"	d
 WIN32_LEAN_AND_MEAN	core/run/nob.h	/^#    define WIN32_LEAN_AND_MEAN$/;"	d
 WORLD_UPDATE	android/c/opengles_wrapper.c	/^  WORLD_UPDATE = 1 << 1,$/;"	e	enum:__anon61049fd50303	file:
 WR	core/ext/stb/image_write.c	/^#define WR(/;"	d	file:
@@ -12119,7 +12109,7 @@ Walk_Dir_Opt	core/run/nob.h	/^        #define Walk_Dir_Opt Nob_Walk_Dir_Opt$/;"	
 Walk_Entry	core/run/nob.h	/^        #define Walk_Entry Nob_Walk_Entry$/;"	d
 Walk_Func	core/run/nob.h	/^        #define Walk_Func Nob_Walk_Func$/;"	d
 YCbCr_to_RGB_kernel	core/ext/stb/image_read.c	/^  void (*YCbCr_to_RGB_kernel)(uint8_t *out, const uint8_t *y, const uint8_t *pcb, const uint8_t /;"	m	struct:__anon6ddad2440608	typeref:typename:void (*)(uint8_t * out,const uint8_t * y,const uint8_t * pcb,const uint8_t * pcr,int count,int step)	file:
-YELLOW	core/tools/console_util.h	/^#define YELLOW /;"	d
+YELLOW	core/main/console_util.h	/^#define YELLOW /;"	d
 _COMMON_IMPLEMENTATION_	core/main/common.c	/^#define _COMMON_IMPLEMENTATION_$/;"	d	file:
 _COMMON_INCLUDED_	core/main/common.h	/^#define _COMMON_INCLUDED_$/;"	d
 _CRT_SECURE_NO_WARNINGS	core/run/nob.h	/^#        define _CRT_SECURE_NO_WARNINGS /;"	d
@@ -12213,9 +12203,6 @@ __anonaba68bed0b08	core/ext/stb/truetype.h	/^typedef struct {$/;"	s
 __anonaba68bed0c08	core/ext/stb/truetype.h	/^typedef struct {$/;"	s
 __anonaba68bed0d08	core/ext/stb/truetype.h	/^typedef struct {$/;"	s
 __anonaba68bed0e08	core/ext/stb/truetype.h	/^typedef struct {$/;"	s
-__anonc008c61e010a	core/tools/codec/image.c	/^typedef union {$/;"	u	file:
-__anonc008c61e0208	core/tools/codec/image.c	/^  struct {$/;"	s	function:load_png	file:
-__anonc008c61e0308	core/tools/codec/image.c	/^  struct {$/;"	s	function:load_png	file:
 __anonc79544900108	core/main/common.h	/^typedef struct {$/;"	s
 __anonc7954490020a	core/main/common.h	/^typedef union {$/;"	u
 __anonc79544900308	core/main/common.h	/^  struct {$/;"	s	union:__anonc7954490020a
@@ -12243,8 +12230,6 @@ __anoneb0359561308	core/run/nob.h	/^typedef struct {$/;"	s
 __anoneb035956140a	core/run/nob.h	/^    union {$/;"	u	struct:__anoneb0359561308
 __anoneb0359561508	core/run/nob.h	/^    struct {$/;"	s	function:nob_chain_cmd_opt
 __anoneb0359561608	core/run/nob.h	/^    struct {$/;"	s	function:nob_chain_end_opt
-__anonf70ad31e0108	core/tools/codec/codec.h	/^typedef struct {$/;"	s
-__anonf70ad31e0208	core/tools/codec/codec.h	/^typedef struct {$/;"	s
 __eglMustCastToProperFunctionPointerType	android/c/opengles_wrapper.c	/^typedef void (*__eglMustCastToProperFunctionPointerType)(void);$/;"	t	typeref:typename:void (*)(void)	file:
 __has_builtin	core/main/common.h	/^  #define __has_builtin(/;"	d
 _actor	core/main/uistage.c	/^} _actor;$/;"	t	typeref:struct:__anon3ea409740408	file:
@@ -12373,7 +12358,6 @@ androidTimerManager_term	android/c/timerManager.c	/^void androidTimerManager_ter
 android_app	android/c/main.c	/^struct android_app {$/;"	s	file:
 android_app_entry	android/c/main.c	/^static void *android_app_entry(void *UNUSED_ARG(param)) {$/;"	f	typeref:typename:void *	file:
 android_app_write_cmd	android/c/main.c	/^static void android_app_write_cmd(int8_t cmd, void *data) {$/;"	f	typeref:typename:void	file:
-android_assets	core/tools/image_pack.c	/^const char *android_assets = "..\/android\/src\/main\/assets\/uiskin";$/;"	v	typeref:typename:const char *
 android_inputManager	android/c/inputManager.c	/^static struct android_inputManager {$/;"	s	file:
 anisotropyEnable	android/c/vulkan_core.h	/^  VkBool32 anisotropyEnable;$/;"	m	struct:VkSamplerCreateInfo	typeref:typename:VkBool32
 antiLag	android/c/vulkan_core.h	/^  VkBool32 antiLag;$/;"	m	struct:VkPhysicalDeviceAntiLagFeaturesAMD	typeref:typename:VkBool32
@@ -12387,7 +12371,6 @@ app14_color_transform	core/ext/stb/image_read.c	/^  int app14_color_transform; \
 applicationNameOffset	android/c/vulkan_core.h	/^  uint32_t applicationNameOffset;$/;"	m	struct:VkDeviceFaultVendorBinaryHeaderVersionOneEXT	typeref:typename:uint32_t
 applicationVersion	android/c/vulkan_core.h	/^  uint32_t applicationVersion;$/;"	m	struct:VkApplicationInfo	typeref:typename:uint32_t
 applicationVersion	android/c/vulkan_core.h	/^  uint32_t applicationVersion;$/;"	m	struct:VkDeviceFaultVendorBinaryHeaderVersionOneEXT	typeref:typename:uint32_t
-apply	android/plugin/src/main/java/org/example/GameTemplatePlugin.java	/^    public void apply(Project project) {$/;"	m	class:GameTemplatePlugin
 apply_grain	android/c/vk_video/vulkan_video_codec_av1std_decode.h	/^  uint32_t apply_grain : 1;$/;"	m	struct:StdVideoDecodeAV1PictureInfoFlags	typeref:typename:uint32_t:1
 apronSize	android/c/vulkan_core.h	/^  VkExtent2D apronSize;$/;"	m	struct:VkTilePropertiesQCOM	typeref:typename:VkExtent2D
 ar_coeff_lag	android/c/vk_video/vulkan_video_codec_av1std.h	/^  uint8_t ar_coeff_lag;$/;"	m	struct:StdVideoAV1FilmGrain	typeref:typename:uint8_t
@@ -12531,7 +12514,6 @@ bottom_field_flag	android/c/vk_video/vulkan_video_codec_h264std_decode.h	/^  uin
 bottom_field_flag	android/c/vk_video/vulkan_video_codec_h264std_decode.h	/^  uint32_t bottom_field_flag : 1;$/;"	m	struct:StdVideoDecodeH264ReferenceInfoFlags	typeref:typename:uint32_t:1
 bottom_field_pic_order_in_frame_present_flag	android/c/vk_video/vulkan_video_codec_h264std.h	/^  uint32_t bottom_field_pic_order_in_frame_present_flag : 1;$/;"	m	struct:StdVideoH264PpsFlags	typeref:typename:uint32_t:1
 bounds	core/ext/stb/truetype.c	/^  int bounds;$/;"	m	struct:__anonaba68be80108	typeref:typename:int	file:
-bpc	core/tools/codec/codec.h	/^  uint8_t bpc, channel;$/;"	m	struct:__anonf70ad31e0108	typeref:typename:uint8_t
 bpp	core/ext/stb/image_read.c	/^  int bpp, offset, hsz;$/;"	m	struct:__anon6ddad2440d08	typeref:typename:int	file:
 bresenhamLines	android/c/vulkan_core.h	/^  VkBool32 bresenhamLines;$/;"	m	struct:VkPhysicalDeviceLineRasterizationFeatures	typeref:typename:VkBool32
 bresenhamLines	android/c/vulkan_core.h	/^  VkBool32 bresenhamLines;$/;"	m	struct:VkPhysicalDeviceVulkan14Features	typeref:typename:VkBool32
@@ -12583,7 +12565,6 @@ bufferOffset	android/c/vulkan_core.h	/^  VkDeviceSize bufferOffset;$/;"	m	struct
 bufferRowLength	android/c/vulkan_core.h	/^  uint32_t bufferRowLength;$/;"	m	struct:VkBufferImageCopy	typeref:typename:uint32_t
 bufferRowLength	android/c/vulkan_core.h	/^  uint32_t bufferRowLength;$/;"	m	struct:VkBufferImageCopy2	typeref:typename:uint32_t
 bufferRowLength	android/c/vulkan_core.h	/^  uint32_t bufferRowLength;$/;"	m	struct:VkCopyMemoryToImageIndirectCommandNV	typeref:typename:uint32_t
-buffer_	core/tools/codec/image.c	/^} buffer_;$/;"	t	typeref:union:__anonc008c61e010a	file:
 buffer_delay_length_minus_1	android/c/vk_video/vulkan_video_codec_av1std_encode.h	/^  uint8_t buffer_delay_length_minus_1;$/;"	m	struct:StdVideoEncodeAV1DecoderModelInfo	typeref:typename:uint8_t
 buffer_removal_time_length_minus_1	android/c/vk_video/vulkan_video_codec_av1std_encode.h	/^  uint8_t buffer_removal_time_length_minus_1;$/;"	m	struct:StdVideoEncodeAV1DecoderModelInfo	typeref:typename:uint8_t
 buffer_removal_time_present_flag	android/c/vk_video/vulkan_video_codec_av1std_decode.h	/^  uint32_t buffer_removal_time_present_flag : 1;$/;"	m	struct:StdVideoDecodeAV1PictureInfoFlags	typeref:typename:uint32_t:1
@@ -12604,11 +12585,8 @@ cache_	android/c/vulkan_wrapper.c	/^  VkPipelineCache cache_;$/;"	m	struct:vulka
 callableShaderBindingTableAddress	android/c/vulkan_core.h	/^  VkDeviceAddress callableShaderBindingTableAddress;$/;"	m	struct:VkTraceRaysIndirectCommand2KHR	typeref:typename:VkDeviceAddress
 callableShaderBindingTableSize	android/c/vulkan_core.h	/^  VkDeviceSize callableShaderBindingTableSize;$/;"	m	struct:VkTraceRaysIndirectCommand2KHR	typeref:typename:VkDeviceSize
 callableShaderBindingTableStride	android/c/vulkan_core.h	/^  VkDeviceSize callableShaderBindingTableStride;$/;"	m	struct:VkTraceRaysIndirectCommand2KHR	typeref:typename:VkDeviceSize
-callback	core/tools/codec/codec.h	/^} callback;$/;"	t	typeref:struct:__anonf70ad31e0208
 callback_already_read	core/ext/stb/image_read.c	/^  int callback_already_read;$/;"	m	struct:__anon6ddad2440108	typeref:typename:int	file:
-canRunTask	android/plugin/src/functionalTest/java/org/example/GameTemplatePluginFunctionalTest.java	/^    @Test void canRunTask() throws IOException {$/;"	m	class:GameTemplatePluginFunctionalTest
 cancer_log_handler	core/run/nob.h	/^        #define cancer_log_handler nob_cancer_log_handler$/;"	d
-cap	core/tools/codec/image.c	/^    size_t count, cap;$/;"	m	struct:load_png::__anonc008c61e0308	typeref:typename:size_t	file:
 capabilities	android/c/vulkan_core.h	/^  VkDisplayPlaneCapabilitiesKHR capabilities;$/;"	m	struct:VkDisplayPlaneCapabilities2KHR	typeref:typename:VkDisplayPlaneCapabilitiesKHR
 capacity	core/run/build.c	/^  size_t count, capacity;$/;"	m	struct:__anon2c23c1e20408	typeref:typename:size_t	file:
 capacity	core/run/nob.h	/^    size_t capacity;$/;"	m	struct:__anoneb0359560208	typeref:typename:size_t
@@ -12636,7 +12614,6 @@ chain_cmd_opt	core/run/nob.h	/^        #define chain_cmd_opt nob_chain_cmd_opt$/
 chain_end	core/run/nob.h	/^        #define chain_end nob_chain_end$/;"	d
 chain_end_opt	core/run/nob.h	/^        #define chain_end_opt nob_chain_end_opt$/;"	d
 channel	core/ext/stb/image_read.c	/^  uint8_t size, type, channel;$/;"	m	struct:__anon6ddad2440e08	typeref:typename:uint8_t	file:
-channel	core/tools/codec/codec.h	/^  uint8_t bpc, channel;$/;"	m	struct:__anonf70ad31e0108	typeref:typename:uint8_t
 channel_order	core/ext/stb/image_read.c	/^  int channel_order;$/;"	m	struct:__anon6ddad2440308	typeref:typename:int	file:
 character	core/main/uistage.c	/^} character;$/;"	t	typeref:struct:__anon3ea409740208	file:
 chardata_for_range	core/ext/stb/truetype.h	/^  stbtt_packedchar *chardata_for_range; \/\/ output$/;"	m	struct:__anonaba68bed0e08	typeref:typename:stbtt_packedchar *
@@ -12732,8 +12709,6 @@ codeType	android/c/vulkan_core.h	/^  VkShaderCodeTypeEXT codeType;$/;"	m	struct:
 code_bits	core/ext/stb/image_read.c	/^  int code_bits;        \/\/ number of valid bits$/;"	m	struct:__anon6ddad2440608	typeref:typename:int	file:
 code_buffer	core/ext/stb/image_read.c	/^  uint32_t code_buffer; \/\/ jpeg entropy-coded buffer$/;"	m	struct:__anon6ddad2440608	typeref:typename:uint32_t	file:
 code_buffer	core/ext/stb/image_read.c	/^  uint32_t code_buffer;$/;"	m	struct:__anon6ddad2440a08	typeref:typename:uint32_t	file:
-codec_image_load_fromCallback	core/tools/codec/image.c	/^void codec_image_load_fromCallback(callback f, image_info *out, void **ret) {$/;"	f	typeref:typename:void
-codec_image_load_fromFile	core/tools/codec/image.c	/^void codec_image_load_fromFile(char const *filename, image_info *out, void **ret) {$/;"	f	typeref:typename:void
 codedExtent	android/c/vulkan_core.h	/^  VkExtent2D codedExtent;$/;"	m	struct:VkVideoPictureResourceInfoKHR	typeref:typename:VkExtent2D
 codedOffset	android/c/vulkan_core.h	/^  VkOffset2D codedOffset;$/;"	m	struct:VkVideoPictureResourceInfoKHR	typeref:typename:VkOffset2D
 codedPictureAlignment	android/c/vulkan_core.h	/^  VkExtent2D codedPictureAlignment;$/;"	m	struct:VkVideoEncodeAV1CapabilitiesKHR	typeref:typename:VkExtent2D
@@ -12900,7 +12875,6 @@ count	core/run/nob.h	/^    size_t count;$/;"	m	struct:__anoneb0359560908	typeref
 count	core/run/nob.h	/^    size_t count;$/;"	m	struct:__anoneb0359560b08	typeref:typename:size_t
 count	core/run/nob.h	/^    size_t count;$/;"	m	struct:__anoneb0359560c08	typeref:typename:size_t
 count	core/run/nob.h	/^    size_t count;$/;"	m	struct:__anoneb0359561308	typeref:typename:size_t
-count	core/tools/codec/image.c	/^    size_t count, cap;$/;"	m	struct:load_png::__anonc008c61e0308	typeref:typename:size_t	file:
 counted_frame	android/c/timerManager.c	/^  size_t counted_frame, lastFPS;$/;"	m	struct:__anon98668f340108	typeref:typename:size_t	file:
 counterIndexCount	android/c/vulkan_core.h	/^  uint32_t counterIndexCount;$/;"	m	struct:VkQueryPoolPerformanceCreateInfoKHR	typeref:typename:uint32_t
 counterPassIndex	android/c/vulkan_core.h	/^  uint32_t counterPassIndex;$/;"	m	struct:VkPerformanceQuerySubmitInfoKHR	typeref:typename:uint32_t
@@ -13304,7 +13278,7 @@ displaySize_	android/c/vulkan_wrapper.c	/^  VkExtent2D displaySize_;$/;"	m	struc
 displayViews_	android/c/vulkan_wrapper.c	/^  VkImageView *displayViews_;$/;"	m	struct:vulkan_src	typeref:typename:VkImageView *	file:
 distributionBase	android/gradle/wrapper/gradle-wrapper.properties	/^distributionBase=GRADLE_USER_HOME$/;"	k
 distributionPath	android/gradle/wrapper/gradle-wrapper.properties	/^distributionPath=wrapper\/dists$/;"	k
-distributionUrl	android/gradle/wrapper/gradle-wrapper.properties	/^distributionUrl=https\\:\/\/services.gradle.org\/distributions\/gradle-9.6.1-bin.zip$/;"	k
+distributionUrl	android/gradle/wrapper/gradle-wrapper.properties	/^distributionUrl=https\\:\/\/services.gradle.org\/distributions\/gradle-9.0.0-rc-2-bin.zip$/;"	k
 divisor	android/c/vulkan_core.h	/^  uint32_t divisor;$/;"	m	struct:VkVertexInputBindingDescription2EXT	typeref:typename:uint32_t
 divisor	android/c/vulkan_core.h	/^  uint32_t divisor;$/;"	m	struct:VkVertexInputBindingDivisorDescription	typeref:typename:uint32_t
 domainOrigin	android/c/vulkan_core.h	/^  VkTessellationDomainOrigin domainOrigin;$/;"	m	struct:VkPipelineTessellationDomainOriginStateCreateInfo	typeref:typename:VkTessellationDomainOrigin
@@ -13524,7 +13498,6 @@ entropy_coding_mode_flag	android/c/vk_video/vulkan_video_codec_h264std.h	/^  uin
 entropy_coding_sync_enabled_flag	android/c/vk_video/vulkan_video_codec_h265std.h	/^  uint32_t entropy_coding_sync_enabled_flag : 1;$/;"	m	struct:StdVideoH265PpsFlags	typeref:typename:uint32_t:1
 eob_run	core/ext/stb/image_read.c	/^  int eob_run;$/;"	m	struct:__anon6ddad2440608	typeref:typename:int	file:
 eof	core/ext/stb/image_read.h	/^  int (*eof)(void *user);                        \/\/ returns nonzero if we are at end of file\//;"	m	struct:__anon6ddad2490108	typeref:typename:int (*)(void * user)
-eof	core/tools/codec/codec.h	/^  int (*eof)(void *);$/;"	m	struct:__anonf70ad31e0208	typeref:typename:int (*)(void *)
 equal_picture_interval	android/c/vk_video/vulkan_video_codec_av1std.h	/^  uint32_t equal_picture_interval : 1;$/;"	m	struct:StdVideoAV1TimingInfoFlags	typeref:typename:uint32_t:1
 err2out	core/run/nob.h	/^    bool err2out;$/;"	m	struct:__anoneb0359560e08	typeref:typename:bool
 err2out	core/run/nob.h	/^    bool err2out;$/;"	m	struct:__anoneb0359561008	typeref:typename:bool
@@ -13622,9 +13595,6 @@ extra_read	core/ext/stb/image_read.c	/^  int extra_read;$/;"	m	struct:__anon6dda
 ey	core/ext/stb/truetype.c	/^  float ey;$/;"	m	struct:stbtt__active_edge	typeref:typename:float	file:
 f	core/main/math/vec.c	/^  float f;$/;"	m	union:__anon2be27dd9010a	typeref:typename:float	file:
 f64	android/c/vulkan_core.h	/^  double f64;$/;"	m	union:VkPipelineExecutableStatisticValueKHR	typeref:typename:double
-f_eof	core/tools/codec/image.c	/^static int f_eof(void *user) {$/;"	f	typeref:typename:int	file:
-f_read	core/tools/codec/image.c	/^static int f_read(void *user, void *data, size_t size) {$/;"	f	typeref:typename:int	file:
-f_seek	core/tools/codec/image.c	/^static void f_seek(void *user, size_t n) {$/;"	f	typeref:typename:void	file:
 fa_append	core/run/nob.h	/^        #define fa_append nob_fa_append$/;"	d
 failOp	android/c/vulkan_core.h	/^  VkStencilOp failOp;$/;"	m	struct:VkStencilOpState	typeref:typename:VkStencilOp
 fast	core/ext/stb/image_read.c	/^  uint16_t fast[1 << STBI__ZFAST_BITS];$/;"	m	struct:__anon6ddad2440908	typeref:typename:uint16_t[]	file:
@@ -13653,7 +13623,6 @@ fieldOffsetGranularity	android/c/vulkan_core.h	/^  VkOffset2D fieldOffsetGranula
 field_pic_flag	android/c/vk_video/vulkan_video_codec_h264std_decode.h	/^  uint32_t field_pic_flag : 1;$/;"	m	struct:StdVideoDecodeH264PictureInfoFlags	typeref:typename:uint32_t:1
 field_seq_flag	android/c/vk_video/vulkan_video_codec_h265std.h	/^  uint32_t field_seq_flag : 1;$/;"	m	struct:StdVideoH265SpsVuiFlags	typeref:typename:uint32_t:1
 file_exists	core/run/nob.h	/^        #define file_exists nob_file_exists$/;"	d
-files	core/tools/image_pack.c	/^const char *files[IMAGE_FILES] = {$/;"	v	typeref:typename:const char * []
 fillModeNonSolid	android/c/vulkan_core.h	/^  VkBool32 fillModeNonSolid;$/;"	m	struct:VkPhysicalDeviceFeatures	typeref:typename:VkBool32
 filmGrainSupport	android/c/vulkan_core.h	/^  VkBool32 filmGrainSupport;$/;"	m	struct:VkVideoDecodeAV1ProfileInfoKHR	typeref:typename:VkBool32
 film_grain_params_present	android/c/vk_video/vulkan_video_codec_av1std.h	/^  uint32_t film_grain_params_present : 1;$/;"	m	struct:StdVideoAV1SequenceHeaderFlags	typeref:typename:uint32_t:1
@@ -14037,14 +14006,12 @@ geometryShader	android/c/vulkan_core.h	/^  VkBool32 geometryShader;$/;"	m	struct
 geometryStreams	android/c/vulkan_core.h	/^  VkBool32 geometryStreams;$/;"	m	struct:VkPhysicalDeviceTransformFeedbackFeaturesEXT	typeref:typename:VkBool32
 geometryType	android/c/vulkan_core.h	/^  VkGeometryTypeKHR geometryType;$/;"	m	struct:VkAccelerationStructureGeometryKHR	typeref:typename:VkGeometryTypeKHR
 geometryType	android/c/vulkan_core.h	/^  VkGeometryTypeKHR geometryType;$/;"	m	struct:VkGeometryNV	typeref:typename:VkGeometryTypeKHR
-getBuildFile	android/plugin/src/functionalTest/java/org/example/GameTemplatePluginFunctionalTest.java	/^    private File getBuildFile() {$/;"	m	class:GameTemplatePluginFunctionalTest	file:
 getDeltaTimeMs	android/c/timerManager.c	/^static float getDeltaTimeMs(void) {$/;"	f	typeref:typename:float	file:
 getDeltaTimeMs	core/main/engine.h	/^  float (*getDeltaTimeMs)(void);$/;"	m	struct:engine	typeref:typename:float (*)(void)
 getErrorGL	android/c/opengles_wrapper.c	/^static void getErrorGL(const char *X) {$/;"	f	typeref:typename:void	file:
 getFPS	android/c/timerManager.c	/^static size_t getFPS(void) {$/;"	f	typeref:typename:size_t	file:
 getFPS	core/main/engine.h	/^  size_t (*getFPS)(void);$/;"	m	struct:engine	typeref:typename:size_t (*)(void)
 getScreenSize	core/main/engine.h	/^  vec2 (*getScreenSize)();$/;"	m	struct:engine	typeref:typename:vec2 (*)()
-getSettingsFile	android/plugin/src/functionalTest/java/org/example/GameTemplatePluginFunctionalTest.java	/^    private File getSettingsFile() {$/;"	m	class:GameTemplatePluginFunctionalTest	file:
 getTouch	android/c/inputManager.c	/^static vec2 getTouch(size_t p) {$/;"	f	typeref:typename:vec2	file:
 getTouch	core/main/engine.h	/^  vec2 (*getTouch)(size_t);$/;"	m	struct:engine	typeref:typename:vec2 (*)(size_t)
 get_current_dir_temp	core/run/nob.h	/^        #define get_current_dir_temp nob_get_current_dir_temp$/;"	d
@@ -14378,7 +14345,6 @@ height	android/c/vulkan_core.h	/^  uint32_t height;$/;"	m	struct:VkOpticalFlowSe
 height	android/c/vulkan_core.h	/^  uint32_t height;$/;"	m	struct:VkTraceRaysIndirectCommand2KHR	typeref:typename:uint32_t
 height	android/c/vulkan_core.h	/^  uint32_t height;$/;"	m	struct:VkTraceRaysIndirectCommandKHR	typeref:typename:uint32_t
 height	core/ext/stb/rectpack.c	/^  int height;$/;"	m	struct:stbrp_context	typeref:typename:int	file:
-height	core/tools/codec/codec.h	/^  uint32_t width, height;$/;"	m	struct:__anonf70ad31e0108	typeref:typename:uint32_t
 help_msg	core/run/help.h	/^#define help_msg /;"	d
 heuristic	core/ext/stb/rectpack.c	/^  int heuristic;$/;"	m	struct:stbrp_context	typeref:typename:int	file:
 hhea	core/ext/stb/truetype.h	/^  int loca,head,glyf,hhea,hmtx,kern,gpos,svg;$/;"	m	struct:stbtt_fontinfo	typeref:typename:int
@@ -14507,11 +14473,9 @@ imageView	android/c/vulkan_core.h	/^  VkImageView imageView;$/;"	m	struct:VkRend
 imageViewBinding	android/c/vulkan_core.h	/^  VkImageView imageViewBinding;$/;"	m	struct:VkVideoPictureResourceInfoKHR	typeref:typename:VkImageView
 imageViewCaptureReplayDescriptorDataSize	android/c/vulkan_core.h	/^  size_t imageViewCaptureReplayDescriptorDataSize;$/;"	m	struct:VkPhysicalDeviceDescriptorBufferPropertiesEXT	typeref:typename:size_t
 imageViewType	android/c/vulkan_core.h	/^  VkImageViewType imageViewType;$/;"	m	struct:VkPhysicalDeviceImageViewImageFormatInfoEXT	typeref:typename:VkImageViewType
-image_info	core/tools/codec/codec.h	/^} image_info;$/;"	t	typeref:struct:__anonf70ad31e0108
 imagelessFramebuffer	android/c/vulkan_core.h	/^  VkBool32 imagelessFramebuffer;$/;"	m	struct:VkPhysicalDeviceImagelessFramebufferFeatures	typeref:typename:VkBool32
 imagelessFramebuffer	android/c/vulkan_core.h	/^  VkBool32 imagelessFramebuffer;$/;"	m	struct:VkPhysicalDeviceVulkan12Features	typeref:typename:VkBool32
 images	android/c/vulkan_core.h	/^  VkPipelineRobustnessImageBehavior images;$/;"	m	struct:VkPipelineRobustnessCreateInfo	typeref:typename:VkPipelineRobustnessImageBehavior
-images_assets	core/tools/image_pack.c	/^const char *images_assets = "assets\/uiskin\/default";$/;"	v	typeref:typename:const char *
 img_buffer	core/ext/stb/image_read.c	/^  uint8_t *img_buffer, *img_buffer_end;$/;"	m	struct:__anon6ddad2440108	typeref:typename:uint8_t *	file:
 img_buffer_end	core/ext/stb/image_read.c	/^  uint8_t *img_buffer, *img_buffer_end;$/;"	m	struct:__anon6ddad2440108	typeref:typename:uint8_t *	file:
 img_buffer_original	core/ext/stb/image_read.c	/^  uint8_t *img_buffer_original, *img_buffer_original_end;$/;"	m	struct:__anon6ddad2440108	typeref:typename:uint8_t *	file:
@@ -14730,14 +14694,12 @@ io	core/ext/stb/image_read.c	/^  stbi_io_callbacks io;$/;"	m	struct:__anon6ddad2
 io_user_data	core/ext/stb/image_read.c	/^  void *io_user_data;$/;"	m	struct:__anon6ddad2440108	typeref:typename:void *	file:
 isForeign	android/c/vulkan_core.h	/^  VkBool32 isForeign;$/;"	m	struct:VkPhysicalDeviceDataGraphProcessingEngineARM	typeref:typename:VkBool32
 isInitialized	android/c/vulkan_wrapper.c	/^  int isInitialized;$/;"	m	struct:vulkan_src	typeref:typename:int	file:
-isPNG9Patch	core/tools/image_pack.c	/^int isPNG9Patch(const char *name) {$/;"	f	typeref:typename:int
 isResized	android/c/vulkan_wrapper.c	/^  int isResized;$/;"	m	struct:vulkan_src	typeref:typename:int	file:
 isText	android/c/vulkan_core.h	/^  VkBool32 isText;$/;"	m	struct:VkDataGraphPipelinePropertyQueryResultARM	typeref:typename:VkBool32
 isText	android/c/vulkan_core.h	/^  VkBool32 isText;$/;"	m	struct:VkPipelineExecutableInternalRepresentationKHR	typeref:typename:VkBool32
 is_filter_switchable	android/c/vk_video/vulkan_video_codec_av1std_decode.h	/^  uint32_t is_filter_switchable : 1;$/;"	m	struct:StdVideoDecodeAV1PictureInfoFlags	typeref:typename:uint32_t:1
 is_filter_switchable	android/c/vk_video/vulkan_video_codec_av1std_encode.h	/^  uint32_t is_filter_switchable : 1;$/;"	m	struct:StdVideoEncodeAV1PictureInfoFlags	typeref:typename:uint32_t:1
 is_intra	android/c/vk_video/vulkan_video_codec_h264std_decode.h	/^  uint32_t is_intra : 1;$/;"	m	struct:StdVideoDecodeH264PictureInfoFlags	typeref:typename:uint32_t:1
-is_iphone	core/tools/codec/image.c	/^    int is_iphone;$/;"	m	struct:load_png::__anonc008c61e0208	typeref:typename:int	file:
 is_motion_mode_switchable	android/c/vk_video/vulkan_video_codec_av1std_decode.h	/^  uint32_t is_motion_mode_switchable : 1;$/;"	m	struct:StdVideoDecodeAV1PictureInfoFlags	typeref:typename:uint32_t:1
 is_motion_mode_switchable	android/c/vk_video/vulkan_video_codec_av1std_encode.h	/^  uint32_t is_motion_mode_switchable : 1;$/;"	m	struct:StdVideoEncodeAV1PictureInfoFlags	typeref:typename:uint32_t:1
 is_non_existing	android/c/vk_video/vulkan_video_codec_h264std_decode.h	/^  uint32_t is_non_existing : 1;$/;"	m	struct:StdVideoDecodeH264ReferenceInfoFlags	typeref:typename:uint32_t:1
@@ -14752,7 +14714,6 @@ items	core/run/nob.h	/^    Nob_Proc *items;$/;"	m	struct:__anoneb0359560b08	type
 items	core/run/nob.h	/^    char *items;$/;"	m	struct:__anoneb0359560908	typeref:typename:char *
 items	core/run/nob.h	/^    const char **items;$/;"	m	struct:__anoneb0359560208	typeref:typename:const char **
 items	core/run/nob.h	/^    const char **items;$/;"	m	struct:__anoneb0359560c08	typeref:typename:const char **
-items	core/tools/codec/image.c	/^    uint32_t *items;$/;"	m	struct:load_png::__anonc008c61e0308	typeref:typename:uint32_t *	file:
 ivec2	core/main/math/vec.h	/^} ivec2;$/;"	t	typeref:struct:__anon2be27dde0408
 ivec2_add	core/main/math/vec.c	/^ivec2 ivec2_add(const ivec2 a, const ivec2 b) { return (ivec2){a.x + b.x, a.y + b.y}; }$/;"	f	typeref:typename:ivec2
 ivec2_sub	core/main/math/vec.c	/^ivec2 ivec2_sub(const ivec2 a, const ivec2 b) { return (ivec2){a.x - b.x, a.y - b.y}; }$/;"	f	typeref:typename:ivec2
@@ -14860,7 +14821,6 @@ loadOp	android/c/vulkan_core.h	/^  VkAttachmentLoadOp loadOp;$/;"	m	struct:VkAtt
 loadOp	android/c/vulkan_core.h	/^  VkAttachmentLoadOp loadOp;$/;"	m	struct:VkRenderingAttachmentInfo	typeref:typename:VkAttachmentLoadOp
 loadShaderFromFile	android/c/vulkan_wrapper.c	/^static int loadShaderFromFile(const char *filePath, VkShaderModule *shaderModule, VkDevice devic/;"	f	typeref:typename:int	file:
 load_jpeg_image	core/ext/stb/image_read.c	/^static uint8_t *load_jpeg_image(stbi__jpeg *z, int *out_x, int *out_y, int *comp, int req_comp) /;"	f	typeref:typename:uint8_t *	file:
-load_png	core/tools/codec/image.c	/^static void load_png(callback f, image_info *out, int *sig, void **ret) {$/;"	f	typeref:typename:void	file:
 loca	core/ext/stb/truetype.h	/^  int loca,head,glyf,hhea,hmtx,kern,gpos,svg;$/;"	m	struct:stbtt_fontinfo	typeref:typename:int
 localDimmingEnable	android/c/vulkan_core.h	/^  VkBool32 localDimmingEnable;$/;"	m	struct:VkSwapchainDisplayNativeHdrCreateInfoAMD	typeref:typename:VkBool32
 localDimmingSupport	android/c/vulkan_core.h	/^  VkBool32 localDimmingSupport;$/;"	m	struct:VkDisplayNativeHdrSurfaceCapabilitiesAMD	typeref:typename:VkBool32
@@ -14933,10 +14893,10 @@ ma	core/ext/stb/image_read.c	/^  unsigned int mr, mg, mb, ma, all_a;$/;"	m	struc
 magFilter	android/c/vulkan_core.h	/^  VkFilter magFilter;$/;"	m	struct:VkSamplerCreateInfo	typeref:typename:VkFilter
 main	core/run/build.c	/^int main(int argc, char **argv) {$/;"	f	typeref:typename:int
 main	core/tests/codec_test.c	/^int main(int,char**) {$/;"	f	typeref:typename:int
-main	core/tests/font_test.c	/^int main(int,char**) {$/;"	f	typeref:typename:int
+main	core/tests/font_test.c	/^int main(int UNUSED_ARG(argc),char**UNUSED_ARG(argv)) {$/;"	f	typeref:typename:int
+main	core/tests/hello.c	/^int main (int UNUSED_ARG(argc), char **UNUSED_ARG(argv)) {$/;"	f	typeref:typename:int
 main	core/tests/rectpack_test.c	/^int main(int,char**) {$/;"	f	typeref:typename:int
-main	core/tools/file_rewrite.c	/^int main (int,char**){$/;"	f	typeref:typename:int
-main	core/tools/image_pack.c	/^int main(int,char**) {$/;"	f	typeref:typename:int
+main	core/tools/hello.c	/^int main (int UNUSED_ARG(argc), char **UNUSED_ARG(argv)) {$/;"	f	typeref:typename:int
 maintenance4	android/c/vulkan_core.h	/^  VkBool32 maintenance4;$/;"	m	struct:VkPhysicalDeviceMaintenance4Features	typeref:typename:VkBool32
 maintenance4	android/c/vulkan_core.h	/^  VkBool32 maintenance4;$/;"	m	struct:VkPhysicalDeviceVulkan13Features	typeref:typename:VkBool32
 maintenance5	android/c/vulkan_core.h	/^  VkBool32 maintenance5;$/;"	m	struct:VkPhysicalDeviceMaintenance5Features	typeref:typename:VkBool32
@@ -15949,9 +15909,6 @@ optimalTilingTensorFeatures	android/c/vulkan_core.h	/^  VkFormatFeatureFlags2 op
 order	core/ext/stb/image_read.c	/^  int scan_n, order[4];$/;"	m	struct:__anon6ddad2440608	typeref:typename:int[4]	file:
 order_hint	android/c/vk_video/vulkan_video_codec_av1std_encode.h	/^  uint8_t order_hint;$/;"	m	struct:StdVideoEncodeAV1PictureInfo	typeref:typename:uint8_t
 order_hint_bits_minus_1	android/c/vk_video/vulkan_video_codec_av1std.h	/^  uint8_t order_hint_bits_minus_1;$/;"	m	struct:StdVideoAV1SequenceHeader	typeref:typename:uint8_t
-org.example	android/plugin/src/functionalTest/java/org/example/GameTemplatePluginFunctionalTest.java	/^package org.example;$/;"	p
-org.example	android/plugin/src/main/java/org/example/GameTemplatePlugin.java	/^package org.example;$/;"	p
-org.example	android/plugin/src/test/java/org/example/GameTemplatePluginTest.java	/^package org.example;$/;"	p
 org.gradle.configuration-cache	android/gradle.properties	/^org.gradle.configuration-cache=true$/;"	k
 origin	android/c/vulkan_core.h	/^  VkOffset2D origin;$/;"	m	struct:VkTilePropertiesQCOM	typeref:typename:VkOffset2D
 origin	core/main/uistage.c	/^    unsigned int origin : 4;$/;"	m	struct:__anon3ea409740408::__anon3ea409740508	typeref:typename:unsigned int:4	file:
@@ -17565,7 +17522,7 @@ planeIndex	android/c/vulkan_core.h	/^  uint32_t planeIndex;$/;"	m	struct:VkDispl
 planeIndex	android/c/vulkan_core.h	/^  uint32_t planeIndex;$/;"	m	struct:VkDisplaySurfaceCreateInfoKHR	typeref:typename:uint32_t
 planeReorderPossible	android/c/vulkan_core.h	/^  VkBool32 planeReorderPossible;$/;"	m	struct:VkDisplayPropertiesKHR	typeref:typename:VkBool32
 planeStackIndex	android/c/vulkan_core.h	/^  uint32_t planeStackIndex;$/;"	m	struct:VkDisplaySurfaceCreateInfoKHR	typeref:typename:uint32_t
-pluginRegistersATask	android/plugin/src/test/java/org/example/GameTemplatePluginTest.java	/^    @Test void pluginRegistersATask() {$/;"	m	class:GameTemplatePluginTest
+playground	configuration-cache/dzw0tifi10bzs96o80aildhft/adbd5fb6mpaxghs75m3sab3tv/configuration-cache-report.html	/^<div id="playground"><\/div>$/;"	I
 poc_lsb_lt	android/c/vk_video/vulkan_video_codec_h265std_encode.h	/^  uint8_t poc_lsb_lt[STD_VIDEO_H265_MAX_LONG_TERM_PICS];$/;"	m	struct:StdVideoEncodeH265LongTermRefPics	typeref:typename:uint8_t[]
 pointClippingBehavior	android/c/vulkan_core.h	/^  VkPointClippingBehavior pointClippingBehavior;$/;"	m	struct:VkPhysicalDevicePointClippingProperties	typeref:typename:VkPointClippingBehavior
 pointClippingBehavior	android/c/vulkan_core.h	/^  VkPointClippingBehavior pointClippingBehavior;$/;"	m	struct:VkPhysicalDeviceVulkan11Properties	typeref:typename:VkPointClippingBehavior
@@ -17747,7 +17704,6 @@ profile	android/c/vk_video/vulkan_video_codec_vp9std_decode.h	/^  StdVideoVP9Pro
 profileCount	android/c/vulkan_core.h	/^  uint32_t profileCount;$/;"	m	struct:VkVideoProfileListInfoKHR	typeref:typename:uint32_t
 profile_idc	android/c/vk_video/vulkan_video_codec_h264std.h	/^  StdVideoH264ProfileIdc profile_idc;$/;"	m	struct:StdVideoH264SequenceParameterSet	typeref:typename:StdVideoH264ProfileIdc
 progressive	core/ext/stb/image_read.c	/^  int progressive;$/;"	m	struct:__anon6ddad2440608	typeref:typename:int	file:
-projectDir	android/plugin/src/functionalTest/java/org/example/GameTemplatePluginFunctionalTest.java	/^    File projectDir;$/;"	f	class:GameTemplatePluginFunctionalTest
 properties	android/c/vulkan_core.h	/^  VkPhysicalDeviceProperties properties;$/;"	m	struct:VkPhysicalDeviceProperties2	typeref:typename:VkPhysicalDeviceProperties
 properties	android/c/vulkan_core.h	/^  VkPhysicalDeviceProperties2 properties;$/;"	m	struct:VkPhysicalDeviceLayeredApiVulkanPropertiesKHR	typeref:typename:VkPhysicalDeviceProperties2
 properties	android/c/vulkan_core.h	/^  VkSparseImageFormatProperties properties;$/;"	m	struct:VkSparseImageFormatProperties2	typeref:typename:VkSparseImageFormatProperties
@@ -17876,7 +17832,6 @@ raygenShaderRecordAddress	android/c/vulkan_core.h	/^  VkDeviceAddress raygenShad
 raygenShaderRecordSize	android/c/vulkan_core.h	/^  VkDeviceSize raygenShaderRecordSize;$/;"	m	struct:VkTraceRaysIndirectCommand2KHR	typeref:typename:VkDeviceSize
 read	core/ext/stb/image_read.h	/^  int (*read)(void *user, char *data, int size); \/\/ fill 'data' with 'size' bytes.  return num/;"	m	struct:__anon6ddad2490108	typeref:typename:int (*)(void * user,char * data,int size)
 read	core/run/nob.h	/^    Nob_Fd read;$/;"	m	struct:__anoneb0359560a08	typeref:typename:Nob_Fd
-read	core/tools/codec/codec.h	/^  int (*read)(void *, void *, size_t);$/;"	m	struct:__anonf70ad31e0208	typeref:typename:int (*)(void *,void *,size_t)
 read_entire_dir	core/run/nob.h	/^        #define read_entire_dir nob_read_entire_dir$/;"	d
 read_entire_file	core/run/nob.h	/^        #define read_entire_file nob_read_entire_file$/;"	d
 read_from_callbacks	core/ext/stb/image_read.c	/^  int read_from_callbacks;$/;"	m	struct:__anon6ddad2440108	typeref:typename:int	file:
@@ -17948,6 +17903,7 @@ render_and_frame_size_different	android/c/vk_video/vulkan_video_codec_av1std_dec
 render_and_frame_size_different	android/c/vk_video/vulkan_video_codec_av1std_encode.h	/^  uint32_t render_and_frame_size_different : 1;$/;"	m	struct:StdVideoEncodeAV1PictureInfoFlags	typeref:typename:uint32_t:1
 render_height_minus_1	android/c/vk_video/vulkan_video_codec_av1std_encode.h	/^  uint16_t render_height_minus_1;$/;"	m	struct:StdVideoEncodeAV1PictureInfo	typeref:typename:uint16_t
 render_width_minus_1	android/c/vk_video/vulkan_video_codec_av1std_encode.h	/^  uint16_t render_width_minus_1;$/;"	m	struct:StdVideoEncodeAV1PictureInfo	typeref:typename:uint16_t
+report	configuration-cache/dzw0tifi10bzs96o80aildhft/adbd5fb6mpaxghs75m3sab3tv/configuration-cache-report.html	/^<div class="report" id="report">$/;"	I
 reportAddressBinding	android/c/vulkan_core.h	/^  VkBool32 reportAddressBinding;$/;"	m	struct:VkPhysicalDeviceAddressBindingReportFeaturesEXT	typeref:typename:VkBool32
 reportedAddress	android/c/vulkan_core.h	/^  VkDeviceAddress reportedAddress;$/;"	m	struct:VkDeviceFaultAddressInfoEXT	typeref:typename:VkDeviceAddress
 representativeFragmentTest	android/c/vulkan_core.h	/^  VkBool32 representativeFragmentTest;$/;"	m	struct:VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV	typeref:typename:VkBool32
@@ -19162,7 +19118,6 @@ scratchMemUsageInBytes	android/c/vulkan_core.h	/^  size_t scratchMemUsageInBytes
 screen	core/main/uistage.c	/^    unsigned int screen : 4;$/;"	m	struct:__anon3ea409740408::__anon3ea409740508	typeref:typename:unsigned int:4	file:
 screenSize	android/c/opengles_wrapper.c	/^  vec2 screenSize;   \/\/$/;"	m	struct:androidGraphics	typeref:typename:vec2	file:
 second_chroma_qp_index_offset	android/c/vk_video/vulkan_video_codec_h264std.h	/^  int8_t second_chroma_qp_index_offset;$/;"	m	struct:StdVideoH264PictureParameterSet	typeref:typename:int8_t
-seek	core/tools/codec/codec.h	/^  void (*seek)(void *, size_t);$/;"	m	struct:__anonf70ad31e0208	typeref:typename:void (*)(void *,size_t)
 segmentation_abs_or_delta_update	android/c/vk_video/vulkan_video_codec_vp9std.h	/^  uint32_t segmentation_abs_or_delta_update : 1;$/;"	m	struct:StdVideoVP9SegmentationFlags	typeref:typename:uint32_t:1
 segmentation_enabled	android/c/vk_video/vulkan_video_codec_av1std_decode.h	/^  uint32_t segmentation_enabled : 1;$/;"	m	struct:StdVideoDecodeAV1PictureInfoFlags	typeref:typename:uint32_t:1
 segmentation_enabled	android/c/vk_video/vulkan_video_codec_av1std_decode.h	/^  uint32_t segmentation_enabled : 1;$/;"	m	struct:StdVideoDecodeAV1ReferenceInfoFlags	typeref:typename:uint32_t:1
@@ -20591,13 +20546,9 @@ type	core/main/uistage.c	/^  _actor_type type;$/;"	m	struct:__anon3ea409740408	t
 type	core/run/nob.h	/^    Nob_File_Type type;$/;"	m	struct:__anoneb0359560508	typeref:typename:Nob_File_Type
 tz	android/c/vulkan_core.h	/^  float tz;$/;"	m	struct:VkSRTDataNV	typeref:typename:float
 u16	core/main/common.h	/^  } u16;$/;"	m	union:__anonc7954490020a	typeref:struct:__anonc7954490020a::__anonc79544900408
-u16_	core/tools/codec/image.c	/^  uint16_t u16_[BUFFER_SIZE64 << 2];$/;"	m	union:__anonc008c61e010a	typeref:typename:uint16_t[]	file:
 u32	core/main/common.h	/^  uint32_t u32;$/;"	m	union:__anonc7954490020a	typeref:typename:uint32_t
-u32_	core/tools/codec/image.c	/^  uint32_t u32_[BUFFER_SIZE64 << 1];$/;"	m	union:__anonc008c61e010a	typeref:typename:uint32_t[]	file:
 u64	android/c/vulkan_core.h	/^  uint64_t u64;$/;"	m	union:VkPipelineExecutableStatisticValueKHR	typeref:typename:uint64_t
-u64_	core/tools/codec/image.c	/^  uint64_t u64_[BUFFER_SIZE64];$/;"	m	union:__anonc008c61e010a	typeref:typename:uint64_t[]	file:
 u8	core/main/common.h	/^  } u8;$/;"	m	union:__anonc7954490020a	typeref:struct:__anonc7954490020a::__anonc79544900308
-u8_	core/tools/codec/image.c	/^  uint8_t  u8_ [BUFFER_SIZE64 << 3];$/;"	m	union:__anonc008c61e010a	typeref:typename:uint8_t[]	file:
 ui	android/c/opengles_wrapper.c	/^  } ui;$/;"	m	struct:androidGraphics	typeref:struct:androidGraphics::__anon61049fd50708	file:
 uint16_t	core/main/common.h	/^  typedef unsigned __int16 uint16_t;$/;"	t	typeref:typename:unsigned __int16
 uint32	android/c/vulkan_core.h	/^  uint32_t uint32;$/;"	m	union:VkPerformanceCounterResultKHR	typeref:typename:uint32_t
@@ -20696,7 +20647,6 @@ used_for_long_term_reference	android/c/vk_video/vulkan_video_codec_h264std_encod
 used_for_long_term_reference	android/c/vk_video/vulkan_video_codec_h265std_decode.h	/^  uint32_t used_for_long_term_reference : 1;$/;"	m	struct:StdVideoDecodeH265ReferenceInfoFlags	typeref:typename:uint32_t:1
 used_for_long_term_reference	android/c/vk_video/vulkan_video_codec_h265std_encode.h	/^  uint32_t used_for_long_term_reference : 1;$/;"	m	struct:StdVideoEncodeH265PictureInfoFlags	typeref:typename:uint32_t:1
 used_for_long_term_reference	android/c/vk_video/vulkan_video_codec_h265std_encode.h	/^  uint32_t used_for_long_term_reference : 1;$/;"	m	struct:StdVideoEncodeH265ReferenceInfoFlags	typeref:typename:uint32_t:1
-user	core/tools/codec/codec.h	/^  void *user;$/;"	m	struct:__anonf70ad31e0208	typeref:typename:void *
 userData	android/c/main.c	/^  void *userData;$/;"	m	struct:android_app	typeref:typename:void *	file:
 userdata	core/ext/stb/truetype.h	/^  void *userdata;$/;"	m	struct:stbtt_fontinfo	typeref:typename:void *
 usesChromaLr	android/c/vk_video/vulkan_video_codec_av1std_decode.h	/^  uint32_t usesChromaLr : 1;$/;"	m	struct:StdVideoDecodeAV1PictureInfoFlags	typeref:typename:uint32_t:1
@@ -21106,7 +21056,6 @@ width	android/c/vulkan_core.h	/^  uint32_t width;$/;"	m	struct:VkOpticalFlowSess
 width	android/c/vulkan_core.h	/^  uint32_t width;$/;"	m	struct:VkTraceRaysIndirectCommand2KHR	typeref:typename:uint32_t
 width	android/c/vulkan_core.h	/^  uint32_t width;$/;"	m	struct:VkTraceRaysIndirectCommandKHR	typeref:typename:uint32_t
 width	core/ext/stb/rectpack.c	/^  int width;$/;"	m	struct:stbrp_context	typeref:typename:int	file:
-width	core/tools/codec/codec.h	/^  uint32_t width, height;$/;"	m	struct:__anonf70ad31e0108	typeref:typename:uint32_t
 win32_data	core/run/nob.h	/^        WIN32_FIND_DATA win32_data;$/;"	m	struct:__anoneb0359560708::__anoneb0359560808	typeref:typename:WIN32_FIND_DATA
 win32_error_message	core/run/nob.h	/^        #define win32_error_message nob_win32_error_message$/;"	d
 win32_hFind	core/run/nob.h	/^        HANDLE win32_hFind;$/;"	m	struct:__anoneb0359560708::__anoneb0359560808	typeref:typename:HANDLE
@@ -21130,7 +21079,6 @@ writeStdPPS	android/c/vulkan_core.h	/^  VkBool32 writeStdPPS;$/;"	m	struct:VkVid
 writeStdSPS	android/c/vulkan_core.h	/^  VkBool32 writeStdSPS;$/;"	m	struct:VkVideoEncodeH264SessionParametersGetInfoKHR	typeref:typename:VkBool32
 writeStdSPS	android/c/vulkan_core.h	/^  VkBool32 writeStdSPS;$/;"	m	struct:VkVideoEncodeH265SessionParametersGetInfoKHR	typeref:typename:VkBool32
 writeStdVPS	android/c/vulkan_core.h	/^  VkBool32 writeStdVPS;$/;"	m	struct:VkVideoEncodeH265SessionParametersGetInfoKHR	typeref:typename:VkBool32
-writeString	android/plugin/src/functionalTest/java/org/example/GameTemplatePluginFunctionalTest.java	/^    private void writeString(File file, String string) throws IOException {$/;"	m	class:GameTemplatePluginFunctionalTest	file:
 write_entire_file	core/run/nob.h	/^        #define write_entire_file nob_write_entire_file$/;"	d
 x	android/c/vulkan_core.h	/^  VkViewportCoordinateSwizzleNV x;$/;"	m	struct:VkViewportSwizzleNV	typeref:typename:VkViewportCoordinateSwizzleNV
 x	android/c/vulkan_core.h	/^  float x;$/;"	m	struct:VkSampleLocationEXT	typeref:typename:float
