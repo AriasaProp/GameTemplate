@@ -453,7 +453,7 @@ static int obj_compile(const char *in, const char **flags) {
       nob_cc_output(&cmd, out);
       cmd_append(&cmd,
   #ifdef _MSC_VER
-        "/MMD", "/std:c23", "/TP", "/WX", "/W4", "/nologo", "/D_CRT_SECURE_NO_WARNINGS", "/I.\main",
+        "/MMD", "/std:c11", "/TP", "/WX", "/W4", "/nologo", "/D_CRT_SECURE_NO_WARNINGS", "/I.\main",
   #  ifdef NO_STDMATH
         "/DNO_STDMATH",
   #  endif // NO_STDMATH
@@ -461,7 +461,7 @@ static int obj_compile(const char *in, const char **flags) {
         "/fp:fast", "/DFASTER_MATH",
   #  endif // FAST_MATH
   #else
-        "-MMD", "-std=c23", "-Werror", "-Wall", "-I./main",
+        "-MMD", "-std=c11", "-Werror", "-Wall", "-I./main",
   #  ifdef NO_STDMATH
         "-DNO_STDMATH",
   #  endif // NO_STDMATH
