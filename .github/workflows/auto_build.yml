@@ -59,7 +59,7 @@ jobs:
           cache-disabled: true
 
       - name: Build Android
-        workspace: android
+        working-directory: android
         run: ./gradlew build
 
       - name: Upload Build Report
