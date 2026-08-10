@@ -22,7 +22,7 @@ add_link_options(-u ANativeActivity_onCreate)
 
 file(GLOB_RECURSE Src_Files
     "${CMAKE_CURRENT_SOURCE_DIR}/c/*.c"
-    "${CORE_SRC}/*.c"
+    "${CORE_SRC}/**/*.c"
 )
 
 add_library(${PROJECT_NAME} SHARED ${Src_Files})
