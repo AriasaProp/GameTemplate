@@ -2,6 +2,7 @@
 #define ENGINE_INCLUDED_
 
 #include "common.h"
+#include "math/vec.h"
 #define MAX_ASSET_READING 256
 #define MAX_UI_DRAW       200
 

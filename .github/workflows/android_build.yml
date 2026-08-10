@@ -45,14 +45,14 @@ jobs:
         working-directory: android
         run: ./gradlew build
 
-      - name: Upload Build Report
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: android-report
-          if-no-files-found: ignore # Don't error if the report doesn't exist
-          overwrite: true
-          path: android/build/reports/
+#      - name: Upload Build Report
+#        if: always()
+#        uses: actions/upload-artifact@v7
+#        with:
+#          name: android-report
+#          if-no-files-found: ignore # Don't error if the report doesn't exist
+#          overwrite: true
+#          path: android/build/reports/
 
       - name: Upload APK Artifact
         if: success() # Only upload APK if build succeeds
