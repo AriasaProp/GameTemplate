@@ -3,14 +3,8 @@ name: Android Build
 on:
   workflow_dispatch:
   push:
-    # Ignore pushes that have [skip ci] in the commit message
-    branches:
-      - '**'
-    tags-ignore:
-      - '**'
     paths:
-      - '.github/workflows/auto_build.yml'
-      - 'core/**'
+      - '.github/workflows/android_build.yml'
       - 'android/**'
 
 jobs:
