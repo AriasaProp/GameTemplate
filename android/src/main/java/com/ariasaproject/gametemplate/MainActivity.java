@@ -9,9 +9,9 @@ import android.view.WindowInsets;
 import android.widget.Toast;
 
 public class MainActivity extends NativeActivity implements View.OnApplyWindowInsetsListener {
-  static {
-    System.loadLibrary("android-native");
-  }
+  // static {
+  //   System.loadLibrary("android-native");
+  // }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class MainActivity extends NativeActivity implements View.OnApplyWindowIn
       // unsuported ?
       // cause floating window
     }
-    insetNative(insetsL, insetsT, insetsR, insetsB);
+    // insetNative(insetsL, insetsT, insetsR, insetsB);
     return insets;
   }
 
@@ -111,5 +111,5 @@ public class MainActivity extends NativeActivity implements View.OnApplyWindowIn
   }
 
   // c implementation
-  native void insetNative(int left, int top, int right, int bottom);
+  // native void insetNative(int left, int top, int right, int bottom);
 }
