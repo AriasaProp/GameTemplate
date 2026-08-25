@@ -1,6 +1,7 @@
 package com.ariasaproject.gametemplate;
 
-import android.app.NativeActivity;
+// import android.app.NativeActivity;
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
