@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.WindowInsets;
 import android.widget.Toast;
 
-public class MainActivity extends NativeActivity implements View.OnApplyWindowInsetsListener {
+public class MainActivity extends Activity implements View.OnApplyWindowInsetsListener {
   // static {
   //   System.loadLibrary("android-native");
   // }
@@ -59,27 +59,27 @@ public class MainActivity extends NativeActivity implements View.OnApplyWindowIn
     return insets;
   }
 
-  @Override
-  public void surfaceCreated(SurfaceHolder holder) {
-    super.surfaceCreated(holder);
-  }
+  // @Override
+  // public void surfaceCreated(SurfaceHolder holder) {
+  //   super.surfaceCreated(holder);
+  // }
 
-  @Override
-  public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-    getWindow().getDecorView().requestApplyInsets();
-    super.surfaceChanged(holder, format, width, height);
-  }
+  // @Override
+  // public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+  //   getWindow().getDecorView().requestApplyInsets();
+  //   super.surfaceChanged(holder, format, width, height);
+  // }
 
-  @Override
-  public void onGlobalLayout() {
-    getWindow().getDecorView().requestApplyInsets();
-    super.onGlobalLayout();
-  }
+  // @Override
+  // public void onGlobalLayout() {
+  //   getWindow().getDecorView().requestApplyInsets();
+  //   super.onGlobalLayout();
+  // }
 
-  @Override
-  public void surfaceDestroyed(SurfaceHolder holder) {
-    super.surfaceDestroyed(holder);
-  }
+  // @Override
+  // public void surfaceDestroyed(SurfaceHolder holder) {
+  //   super.surfaceDestroyed(holder);
+  // }
 
   @Override
   protected void onStart() {
