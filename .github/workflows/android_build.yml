@@ -14,10 +14,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
 
-      - name: Install Compiler
-        uses: rlalik/setup-cpp-compiler@master
-        with:
-          compiler: latest
+      # - name: Install Compiler
+      #   uses: rlalik/setup-cpp-compiler@master
+      #   with:
+      #     compiler: latest
 
       # - name: Run Core Test
       #   working-directory: core
