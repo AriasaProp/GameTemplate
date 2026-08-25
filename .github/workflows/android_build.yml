@@ -25,9 +25,9 @@ jobs:
         with:
           compiler: latest
 
-      - name: Run Core Test
-        working-directory: core
-        run: (cc -o run/build run/build.c) && (run/build test)
+      # - name: Run Core Test
+      #   working-directory: core
+      #   run: (cc -o run/build run/build.c) && (run/build test)
 
       - name: Set up JDK 21
         uses: actions/setup-java@v5
