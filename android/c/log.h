@@ -5,6 +5,8 @@
 
 #ifdef DEBUG
 #  define LOGD(...) ((void)__android_log_print(ANDROID_LOG_DEBUG, _IDENTITY_, __VA_ARGS__))
+#else
+#  define LOGD(...)
 #endif // DEBUG
 
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO , _IDENTITY_, __VA_ARGS__))
