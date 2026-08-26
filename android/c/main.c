@@ -133,7 +133,7 @@ static void *android_app_entry(void *UNUSED_ARG(param)) {
     int ready = app->stateApp & (STATE_APP_WINDOW | STATE_APP_RUNNING);
     if (ALooper_pollOnce(!ready * -1, NULL, NULL, NULL) == ALOOPER_POLL_ERROR)
       LOGE("ALooper_pollOnce returned an error");
-    if (ready && /*  Graphics pre render */) {
+    if (ready /*  Graphics pre render */) {
       // update
       if ((app->delayed_cmdState == APP_CMD_WINDOW_DESTROYED) ||
           (app->delayed_cmdState == APP_CMD_PAUSE)) {
