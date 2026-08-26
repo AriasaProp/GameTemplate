@@ -37,7 +37,7 @@ jobs:
 
       - name: Build Android
         working-directory: android
-        run: ./gradlew build
+        run: ./gradlew build -Prelease
 
 #      - name: Upload Build Report
 #        if: always()

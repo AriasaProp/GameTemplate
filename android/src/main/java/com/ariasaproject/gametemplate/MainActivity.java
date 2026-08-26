@@ -1,7 +1,6 @@
 package com.ariasaproject.gametemplate;
 
-// import android.app.NativeActivity;
-import android.app.Activity;
+import android.app.NativeActivity;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
@@ -9,10 +8,10 @@ import android.view.View;
 import android.view.WindowInsets;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements View.OnApplyWindowInsetsListener {
-  // static {
-  //   System.loadLibrary("android-native");
-  // }
+public class MainActivity extends NativeActivity implements View.OnApplyWindowInsetsListener {
+  static {
+    System.loadLibrary("android-native");
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -56,31 +55,31 @@ public class MainActivity extends Activity implements View.OnApplyWindowInsetsLi
       // unsuported ?
       // cause floating window
     }
-    // insetNative(insetsL, insetsT, insetsR, insetsB);
+    insetNative(insetsL, insetsT, insetsR, insetsB);
     return insets;
   }
 
-  // @Override
-  // public void surfaceCreated(SurfaceHolder holder) {
-  //   super.surfaceCreated(holder);
-  // }
+  @Override
+  public void surfaceCreated(SurfaceHolder holder) {
+    super.surfaceCreated(holder);
+  }
 
-  // @Override
-  // public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-  //   getWindow().getDecorView().requestApplyInsets();
-  //   super.surfaceChanged(holder, format, width, height);
-  // }
+  @Override
+  public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+    getWindow().getDecorView().requestApplyInsets();
+    super.surfaceChanged(holder, format, width, height);
+  }
 
-  // @Override
-  // public void onGlobalLayout() {
-  //   getWindow().getDecorView().requestApplyInsets();
-  //   super.onGlobalLayout();
-  // }
+  @Override
+  public void onGlobalLayout() {
+    getWindow().getDecorView().requestApplyInsets();
+    super.onGlobalLayout();
+  }
 
-  // @Override
-  // public void surfaceDestroyed(SurfaceHolder holder) {
-  //   super.surfaceDestroyed(holder);
-  // }
+  @Override
+  public void surfaceDestroyed(SurfaceHolder holder) {
+    super.surfaceDestroyed(holder);
+  }
 
   @Override
   protected void onStart() {
@@ -112,5 +111,5 @@ public class MainActivity extends Activity implements View.OnApplyWindowInsetsLi
   }
 
   // c implementation
-  // native void insetNative(int left, int top, int right, int bottom);
+  native void insetNative(int left, int top, int right, int bottom);
 }
