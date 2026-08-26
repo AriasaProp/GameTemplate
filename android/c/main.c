@@ -236,7 +236,7 @@ static void onInputQueueDestroyed(ANativeActivity *UNUSED_ARG(activity), AInputQ
   write_cmd_and_wait(APP_CMD_INPUT_DESTROYED, NULL);
 }
 void ANativeActivity_onCreate(ANativeActivity *activity, void *savedState, size_t savedStateSize) {
-#define SET_CALLBACK(A) activity->callbacks->##A = A
+#define SET_CALLBACK(A) activity->callbacks->A = A
   SET_CALLBACK(onDestroy);
   SET_CALLBACK(onStart);
   SET_CALLBACK(onResume);
