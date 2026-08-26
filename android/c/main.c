@@ -309,6 +309,6 @@ void toastMessage(const char *msg, ...) {
 #endif // _DEBUG
 
 // native MainActivity.java
-JNIEXPORT void JNICALL Java_com_ariasaproject_technowar_MainActivity_insetNative(JNIEnv *UNUSED_ARG(env), jobject UNUSED_ARG(o), jint UNUSED_ARG(left), jint UNUSED_ARG(top), jint UNUSED_ARG(right), jint UNUSED_ARG(bottom)) {
+JNIEXPORT void JNICALL Java_com_ariasaproject_gametemplate_MainActivity_insetNative(JNIEnv *UNUSED_ARG(env), jobject UNUSED_ARG(o), jint UNUSED_ARG(left), jint UNUSED_ARG(top), jint UNUSED_ARG(right), jint UNUSED_ARG(bottom)) {
   // TODO: onGraphics resize on insets
 }

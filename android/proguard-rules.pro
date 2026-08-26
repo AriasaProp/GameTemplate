@@ -20,7 +20,7 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keepclassmembers class com.ariasaproject.technowar.MainActivity {
+-keepclassmembers class com.ariasaproject.gametemplate.MainActivity {
     private void showToast(java.lang.String);
 }
 
