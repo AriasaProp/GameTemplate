@@ -14,6 +14,7 @@
 #include <unistd.h>
 
 #include "common.h"
+#include "log.h"
 
 struct msg_pipe {
   int8_t cmd;
@@ -22,9 +23,9 @@ struct msg_pipe {
 
 enum {
   STATE_APP_DESTROY = 0,
-  STATE_APP_INIT    = 1,
-  STATE_APP_WINDOW  = 2,
-  STATE_APP_RUNNING = 4,
+  STATE_APP_INIT    = 1 << 0,
+  STATE_APP_WINDOW  = 1 << 1,
+  STATE_APP_RUNNING = 1 << 2,
 };
 
 struct android_app {
