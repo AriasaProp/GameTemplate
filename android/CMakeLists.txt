@@ -11,8 +11,8 @@ set(CORE_SRC "${CMAKE_CURRENT_SOURCE_DIR}/../core/main")
 
 add_compile_definitions(
     ANDROID_STL=c_static
-    _IDENTITY_=${BUILD_ID}
-    $<IF:$<CONFIG:Debug>,_DEBUG,>
+    _IDENTITY_="${PROJECT_NAME}"
+    $<IF:$<CONFIG:Debug>,DEBUG,>
 )
 add_compile_options(
     -fexceptions
