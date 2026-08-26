@@ -14,6 +14,7 @@
 #include <unistd.h>
 
 #include "common.h"
+#include "log.h"
 
 struct msg_pipe {
   int8_t cmd;
