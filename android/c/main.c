@@ -126,15 +126,20 @@ static void *android_app_entry(void *UNUSED_ARG(param)) {
 
   // initialize object
   app->stateApp = STATE_APP_INIT;
-  while (app->stateApp) {
+  while (app->stateApp & STATE_APP_INIT) {
     int ready = app->stateApp & (STATE_APP_WINDOW | STATE_APP_RUNNING);
-    IS_ERROR (ALooper_pollOnce(!ready * -1, NULL, NULL, NULL) == ALOOPER_POLL_ERROR)
+    IS_ERROR (ALooper_pollOnce(!ready * -1, NULL, NULL, NULL) == ALOOPER_POLL_ERROR) {
       LOGE("ALooper_pollOnce returned an error");
+      continue;
+    }
     if (ready /* graphics pre render */) {
-      // update main
       if ((app->delayed_cmdState == APP_CMD_WINDOW_DESTROYED) ||
           (app->delayed_cmdState == APP_CMD_PAUSE)) {
+        // pause graphics
         // pause main
+      } else {
+        // update graphics
+        // update main
       }
       // counting fps
       // post render
@@ -162,10 +167,8 @@ static struct msg_pipe wmsg;
 static inline void write_cmd(int8_t cmd, void *data) {
   wmsg.cmd = cmd;
   wmsg.data = data;
-  IS_ERROR (write(app->msgwrite, &wmsg, sizeof(struct msg_pipe)) != sizeof(struct msg_pipe)) {
+  while (write(app->msgwrite, &wmsg, sizeof(struct msg_pipe)) != sizeof(struct msg_pipe))
     LOGE("Failure writing android_app cmd: %s\n", strerror(errno));
-    write_cmd(cmd, data);
-  }
 }
 static inline void write_cmd_and_wait(int8_t cmd, void *data) {
   write_cmd(cmd, data);
@@ -176,14 +179,11 @@ static inline void write_cmd_and_wait(int8_t cmd, void *data) {
 }
 
 static void onDestroy(ANativeActivity *UNUSED_ARG(activity)) {
-  write_cmd(APP_CMD_DESTROY, NULL);
-  pthread_mutex_lock(&app->mutex);
-  while (app->stateApp)
-    pthread_cond_wait(&app->cond, &app->mutex);
-  pthread_mutex_unlock(&app->mutex);
-
+  write_cmd_and_wait(APP_CMD_DESTROY, NULL);
+  
   close(app->msgread);
   close(app->msgwrite);
+  
   pthread_cond_destroy(&app->cond);
   pthread_mutex_destroy(&app->mutex);
   free(app);
@@ -268,12 +268,19 @@ void ANativeActivity_onCreate(ANativeActivity *activity, void *savedState, size_
   pthread_attr_init(&attr);
   pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
   IS_ERROR (pthread_create(&app->thread, &attr, android_app_entry, NULL)) {
+    // destroy pipe
+    close(app->msgread);
+    close(app->msgwrite);
     pthread_attr_destroy(&attr);
     goto oncreate_failure;
   }
   pthread_attr_destroy(&attr);
   return;
 oncreate_failure:
+  // mutex destroy
+  pthread_mutex_destroy(&app->mutex);
+  // condition destroy
+  pthread_cond_destroy(&app->cond);
   // unset callback
   memset(activity->callbacks, 0, sizeof(*activity->callbacks));
   // freed android resources
@@ -282,10 +289,9 @@ oncreate_failure:
   ANativeActivity_finish(activity);
 }
 
-#ifdef _DEBUG
+#ifdef DEBUG
 void toastMessage(const char *msg, ...) {
-  if (!app)
-    return;
+  if (!app) return;
 
   static char temp[512];
   va_list args;
@@ -306,7 +312,7 @@ void toastMessage(const char *msg, ...) {
     (*vm)->DetachCurrentThread(vm);
   }
 }
-#endif // _DEBUG
+#endif // DEBUG
 
 // native MainActivity.java
 JNIEXPORT void JNICALL Java_com_ariasaproject_gametemplate_MainActivity_insetNative(JNIEnv *UNUSED_ARG(env), jobject UNUSED_ARG(o), jint UNUSED_ARG(left), jint UNUSED_ARG(top), jint UNUSED_ARG(right), jint UNUSED_ARG(bottom)) {
