@@ -118,6 +118,7 @@ static int process_cmd(int fd, int UNUSED_ARG(event), void *UNUSED_ARG(data)) {
 }
 
 static void *android_app_entry(void *UNUSED_ARG(param)) {
+  int ready;
   app->config = AConfiguration_new();
   AConfiguration_fromAssetManager(app->config, app->activity->assetManager);
 
@@ -127,7 +128,7 @@ static void *android_app_entry(void *UNUSED_ARG(param)) {
   // initialize object
   app->stateApp = STATE_APP_INIT;
   while (app->stateApp & STATE_APP_INIT) {
-    int ready = app->stateApp & (STATE_APP_WINDOW | STATE_APP_RUNNING);
+    ready = app->stateApp & (STATE_APP_WINDOW | STATE_APP_RUNNING);
     IS_ERROR (ALooper_pollOnce(!ready * -1, NULL, NULL, NULL) == ALOOPER_POLL_ERROR) {
       LOGE("ALooper_pollOnce returned an error");
       continue;
@@ -169,9 +170,6 @@ static inline void write_cmd(int8_t cmd, void *data) {
   wmsg.data = data;
   while (write(app->msgwrite, &wmsg, sizeof(struct msg_pipe)) != sizeof(struct msg_pipe))
     LOGE("Failure writing android_app cmd: %s\n", strerror(errno));
-}
-static inline void write_cmd_and_wait(int8_t cmd, void *data) {
-  write_cmd(cmd, data);
   pthread_mutex_lock(&app->mutex);
   while (app->cmdState != cmd)
     pthread_cond_wait(&app->cond, &app->mutex);
@@ -179,7 +177,7 @@ static inline void write_cmd_and_wait(int8_t cmd, void *data) {
 }
 
 static void onDestroy(ANativeActivity *UNUSED_ARG(activity)) {
-  write_cmd_and_wait(APP_CMD_DESTROY, NULL);
+  write_cmd(APP_CMD_DESTROY, NULL);
   
   close(app->msgread);
   close(app->msgwrite);
@@ -201,16 +199,16 @@ static void *onSaveInstanceState(ANativeActivity *UNUSED_ARG(activity), size_t *
   return NULL;
 }
 static void onPause(ANativeActivity *UNUSED_ARG(activity)) {
-  write_cmd_and_wait(APP_CMD_PAUSE, NULL);
+  write_cmd(APP_CMD_PAUSE, NULL);
 }
 static void onStop(ANativeActivity *UNUSED_ARG(activity)) {
-  write_cmd_and_wait(APP_CMD_STOP, NULL);
+  write_cmd(APP_CMD_STOP, NULL);
 }
 static void onConfigurationChanged(ANativeActivity *UNUSED_ARG(activity)) {
   write_cmd(APP_CMD_CONFIG_CHANGED, NULL);
 }
 static void onLowMemory(ANativeActivity *UNUSED_ARG(activity)) {
-  write_cmd_and_wait(APP_CMD_LOW_MEMORY, NULL);
+  write_cmd(APP_CMD_LOW_MEMORY, NULL);
 }
 static void onWindowFocusChanged(ANativeActivity *UNUSED_ARG(activity), int focused) {
   write_cmd(focused ? APP_CMD_GAINED_FOCUS : APP_CMD_LOST_FOCUS, NULL);
@@ -228,13 +226,13 @@ static void onNativeWindowCreated(ANativeActivity *UNUSED_ARG(activity), ANative
   write_cmd(APP_CMD_WINDOW_CREATED, (void *)window);
 }
 static void onNativeWindowDestroyed(ANativeActivity *UNUSED_ARG(activity), ANativeWindow *UNUSED_ARG(window)) {
-  write_cmd_and_wait(APP_CMD_WINDOW_DESTROYED, NULL);
+  write_cmd(APP_CMD_WINDOW_DESTROYED, NULL);
 }
 static void onInputQueueCreated(ANativeActivity *UNUSED_ARG(activity), AInputQueue *queue) {
   write_cmd(APP_CMD_INPUT_CREATED, (void *)queue);
 }
 static void onInputQueueDestroyed(ANativeActivity *UNUSED_ARG(activity), AInputQueue *UNUSED_ARG(queue)) {
-  write_cmd_and_wait(APP_CMD_INPUT_DESTROYED, NULL);
+  write_cmd(APP_CMD_INPUT_DESTROYED, NULL);
 }
 void ANativeActivity_onCreate(ANativeActivity *activity, void *savedState, size_t savedStateSize) {
 #define SET_CALLBACK(A) activity->callbacks->A = A
