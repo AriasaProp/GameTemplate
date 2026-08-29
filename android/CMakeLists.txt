@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22.1)
 
-project(android-native LANGUAGES C)
+project(ext LANGUAGES C)
 
 set(CMAKE_C_STANDARD 23)
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -20,14 +20,21 @@ add_compile_options(
 )
 add_link_options(-u ANativeActivity_onCreate)
 
-file(GLOB_RECURSE Src_Files
-    "${CMAKE_CURRENT_SOURCE_DIR}/c/*.c"
-    "${CORE_SRC}/**/*.c"
-)
+file(GLOB_RECURSE CoreSrc "${CORE_SRC}/main/**/*.c")
 
-add_library(${PROJECT_NAME} SHARED ${Src_Files})
-target_include_directories(${PROJECT_NAME} PRIVATE 
-    ${CMAKE_CURRENT_SOURCE_DIR}/c
-    ${CORE_SRC}
+add_library(${PROJECT_NAME} SHARED
+    ${CMAKE_CURRENT_SOURCE_DIR}/c/graphics/graphics.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/c/main.c
+    ${CoreSrc}
 )
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/c ${CORE_SRC})
 target_link_libraries(${PROJECT_NAME} android log m)
+
+add_library(${PROJECT_NAME}_gles SHARED
+    ${CMAKE_CURRENT_SOURCE_DIR}/c/graphics/graphics_gles.c
+    ${CoreSrc}
+)
+target_include_directories(${PROJECT_NAME}_gles PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/c ${CORE_SRC})
+target_link_libraries(${PROJECT_NAME}_gles EGL GLESv3 android log m)
+
+

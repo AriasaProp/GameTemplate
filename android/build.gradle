@@ -25,6 +25,9 @@ android {
 		    multiDexEnabled true
 				proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 				
+				shaders {
+            glslcArgs.addAll(['-c', '-g'])
+        }
 		}
 		buildTypes {
 				release {
@@ -37,6 +40,9 @@ android {
             testCoverageEnabled true
 				}
 		}
+		sourceSets {
+        main.shaders.srcDirs = ['shaders']
+    }
 		externalNativeBuild {
         cmake.path 'CMakeLists.txt'
     }

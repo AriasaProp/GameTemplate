@@ -120,7 +120,7 @@ typedef unsigned long long ullong;
 #  define UNUSED_ARG(x)    __attribute__((unused)) x
 #  define NONNULL_ARG(x)   __attribute__((nonnull)) x
 #  define BLTN(x)          __has_builtin(x)
-	#define SIMD_ALIGN(type, name) type name __attribute__((aligned(16)))
+#  define SIMD_ALIGN(type, name) type name __attribute__((aligned(16)))
 #  define ALIGN(N)     __attribute__((aligned(N)))
 #  define PACKED(type) __attribute__((packed)) type
 #else /* Unknown compiler */
