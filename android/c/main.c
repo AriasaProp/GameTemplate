@@ -1,6 +1,7 @@
 #include <android/configuration.h>
 #include <android/looper.h>
 #include <android/native_activity.h>
+#include <android/asset_manager.h>
 
 #include <errno.h>
 #include <jni.h>
@@ -16,22 +17,33 @@
 #include "graphics/graphics.h"
 #include "common.h"
 #include "log.h"
+// assets
+extern void androidAsset_init(AAssetManager*);
+extern void androidAsset_term(void);
+// graphics
+extern void androidGraphics_initial(void);
+extern void androidGraphics_attach(ANativeWindow*);
+extern bool androidGraphics_validate(void);
+extern void androidGraphics_resize(bool,float*);
+extern void androidGraphics_postRender(void);
+extern void androidGraphics_invalidate(void);
+extern void androidGraphics_destroy(void);
 
-struct msg_pipe {
+
+typedef struct {
   int8_t cmd;
   void *data;
-};
+} msg_pipe;
 
 enum {
-  STATE_APP_INITIAL  = 1,
-  STATE_APP_WINDOW   = 2,
-  STATE_APP_RUNNING  = 4,
-  STATE_APP_STARTING = 8,
+  STATE_APP_INITIAL  = 1 << 0,
+  STATE_APP_WINDOW   = 1 << 1,
+  STATE_APP_RUNNING  = 1 << 2,
+  STATE_APP_STARTING = 1 << 3,
   STATE_APP_READY    = 15
 };
 
 struct android_app {
-  ANativeActivity *activity;
   AConfiguration *config;
   ANativeWindow *window;
   ARect contentRect;
@@ -72,15 +84,17 @@ enum {
 };
 
 static int preProcessCmd(int fd, int UNUSED_ARG(event), void *UNUSED_ARG(data)) {
-  static struct msg_pipe rmsg;
-  if (read(fd, &rmsg, sizeof(struct msg_pipe)) != sizeof(struct msg_pipe)) {
+  static msg_pipe rmsg;
+  if (read(fd, &rmsg, sizeof(msg_pipe)) != sizeof(msg_pipe)) {
     LOGE("No data on command pipe!");
     return 0;
   }
   switch (rmsg.cmd) {
     case APP_CMD_SAVE_STATE:
     case APP_CMD_WINDOW_REDRAW:
+      break;
     case APP_CMD_START:
+      androidAsset_init(CAST(AAssetManager*)rmsg.data);
       app->stateApp |= STATE_APP_STARTING;
       break;
     case APP_CMD_INPUT_CREATED:
@@ -91,18 +105,18 @@ static int preProcessCmd(int fd, int UNUSED_ARG(event), void *UNUSED_ARG(data)) 
       break;
     case APP_CMD_WINDOW_CREATED:
       // graphics create
-      app->window = CAST(ANativeWindow*)rmsg.data;
+      androidGraphics_attach(CAST(ANativeWindow*)rmsg.data);
       app->stateApp |= STATE_APP_WINDOW;
       break;
     case APP_CMD_RESUME:
       app->stateApp |= STATE_APP_RUNNING;
       break;
     case APP_CMD_WINDOW_RESIZE:
-      graphics_resize(true, NULL);
+      androidGraphics_resize(true, VEC4_ZERO);
       break;
     case APP_CMD_WINDOW_RESIZE_INSETS:
     case APP_CMD_CONTENT_RECT_CHANGED:
-      graphics_resize(false, CAST(float*)rmsg.data);
+      androidGraphics_resize(false, *CAST(vec4*)rmsg.data);
       free(rmsg.data);
       break;
     case APP_CMD_GAINED_FOCUS:
@@ -112,7 +126,7 @@ static int preProcessCmd(int fd, int UNUSED_ARG(event), void *UNUSED_ARG(data)) 
       // sensor disable
       break;
     case APP_CMD_CONFIG_CHANGED:
-      AConfiguration_fromAssetManager(app->config, app->activity->assetManager);
+      AConfiguration_fromAssetManager(app->config, CAST(AAssetManager*)rmsg.data);
       break;
   }
   app->delayed_cmdState = rmsg.cmd;
@@ -136,44 +150,39 @@ static void onProcessCmd() {
 }
 static void postProcessCmd() {
   switch (app->delayed_cmdState) {
-    case APP_CMD_WINDOW_DESTROYED:
-      graphics_invalidate();
-      app->stateApp &= ~STATE_APP_WINDOW;
-      break;
-    case APP_CMD_PAUSE:
-      graphics_invalidate();
-      app->stateApp &= ~STATE_APP_RUNNING;
-      break;
-    case APP_CMD_STOP:
-      graphics_invalidate();
-      app->stateApp &= ~STATE_APP_STARTING;
-      break;
     case APP_CMD_DESTROY:
-      graphics_invalidate();
       app->stateApp &= ~STATE_APP_INIT;
+    case APP_CMD_STOP:
+      app->stateApp &= ~STATE_APP_STARTING;
+      androidAsset_term();
+    case APP_CMD_PAUSE:
+      app->stateApp &= ~STATE_APP_RUNNING;
+    case APP_CMD_WINDOW_DESTROYED:
+      androidGraphics_invalidate();
+      app->stateApp &= ~STATE_APP_WINDOW;
       break;
   }
 }
 
-static void *main_entry(void *UNUSED_ARG(param)) {
+static void *main_entry(void *param) {
   app->config = AConfiguration_new();
-  AConfiguration_fromAssetManager(app->config, app->activity->assetManager);
+  AConfiguration_fromAssetManager(app->config, CAST(AAssetManager*)param);
 
   ALooper *looper = ALooper_prepare(0);
   ALooper_addFd(looper, app->msgread, 1, ALOOPER_EVENT_INPUT, preProcessCmd, NULL);
   
   // initialize
-  graphics_initial();
+  androidGraphics_initial();
 
   app->stateApp = STATE_APP_INIT;
 
   while (app->stateApp) {
     if (ALooper_pollOnce((app->stateApp != STATE_APP_READY) * -1, NULL, NULL, NULL) == ALOOPER_POLL_ERROR)
       LOGE("ALooper_pollOnce returned an error");
-    if ((app->stateApp == STATE_APP_READY) && graphics_validate(app->window)) {
+    if ((app->stateApp == STATE_APP_READY) && androidGraphics_validate()) {
       onProcessCmd();
       // TODO: game frame count
-      graphics_postRender();
+      androidGraphics_postRender();
     }
     postProcessCmd();
     if (app->cmdState != app->delayed_cmdState) {
@@ -183,19 +192,18 @@ static void *main_entry(void *UNUSED_ARG(param)) {
       pthread_mutex_unlock(&app->mutex);
     }
   }
-
   AConfiguration_delete(app->config);
-  graphics_destroy();
+  androidGraphics_destroy();
 
   // Can't touch app object after this.
   return NULL;
 }
 
-static struct msg_pipe wmsg;
+static msg_pipe wmsg;
 static void write_cmd(int8_t cmd, void *data) {
   wmsg.cmd = cmd;
   wmsg.data = data;
-  while (write(app->msgwrite, &wmsg, sizeof(struct msg_pipe)) != sizeof(struct msg_pipe))
+  while (write(app->msgwrite, &wmsg, sizeof(msg_pipe)) != sizeof(msg_pipe))
     LOGE("Failure writing android_app cmd: %s\n", strerror(errno));
 }
 static inline void write_cmd_and_wait(int8_t cmd, void *data) {
@@ -219,9 +227,9 @@ static void onDestroy(ANativeActivity *UNUSED_ARG(activity)) {
   app = NULL;
   LOGI("onDestroy activity state done");
 }
-static void onStart(ANativeActivity *UNUSED_ARG(activity)) {
+static void onStart(ANativeActivity *activity) {
   LOGI("onStart activity state");
-  write_cmd(APP_CMD_START, NULL);
+  write_cmd(APP_CMD_START, CAST(void*)activity->assetManager);
 }
 static void onResume(ANativeActivity *UNUSED_ARG(activity)) {
   LOGI("onResume activity state");
@@ -240,9 +248,9 @@ static void onStop(ANativeActivity *UNUSED_ARG(activity)) {
   LOGI("onStop activity state");
   write_cmd_and_wait(APP_CMD_STOP, NULL);
 }
-static void onConfigurationChanged(ANativeActivity *UNUSED_ARG(activity)) {
+static void onConfigurationChanged(ANativeActivity *activity) {
   LOGI("onConfigurationChanged activity state");
-  write_cmd(APP_CMD_CONFIG_CHANGED, NULL);
+  write_cmd(APP_CMD_CONFIG_CHANGED, CAST(void*)activity->assetManager);
 }
 static void onLowMemory(ANativeActivity *UNUSED_ARG(activity)) {
   LOGI("onLowMemory activity state");
@@ -302,7 +310,6 @@ void ANativeActivity_onCreate(ANativeActivity *activity, void *UNUSED_ARG(savedS
 #undef CALLBACK_SET
   
   app = (struct android_app *)calloc(1, sizeof(struct android_app));
-  app->activity = activity;
 
   pthread_mutex_init(&app->mutex, NULL);
   pthread_cond_init(&app->cond, NULL);
@@ -312,7 +319,7 @@ void ANativeActivity_onCreate(ANativeActivity *activity, void *UNUSED_ARG(savedS
     goto oncreate_failure;
   }
 
-  IS_ERROR (pthread_create(&app->thread, NULL, main_entry, NULL)) {
+  IS_ERROR (pthread_create(&app->thread, NULL, main_entry, CAST(void*)activity->assetManager)) {
     LOGE("Failure running thread");
     close(app->msgread);
     close(app->msgwrite);
@@ -329,44 +336,13 @@ oncreate_failure:
   LOGI("onCreate activity state failure");
 }
 
-#ifdef DEBUG
-void toastMessage(const char *msg, ...) {
-  if (!app)
-    return;
-
-  static char temp[512];
-  va_list args;
-  va_start(args, msg);
-  vsnprintf(temp, 512, msg, args);
-  va_end(args);
-
-  JavaVM *vm = app->activity->vm;
-  JNIEnv *env;
-  static jmethodID id = 0;
-  if ((*vm)->AttachCurrentThread(vm, &env, NULL) != JNI_OK) {
-    if (!id) {
-      jclass cls = (*env)->GetObjectClass(env, app->activity->clazz);
-      id = (*env)->GetMethodID(env, cls, "showToast", "(Ljava/lang/String;)V");
-    }
-    jstring jmsg = (*env)->NewStringUTF(env, temp);
-    (*env)->CallVoidMethod(env, app->activity->clazz, id, jmsg);
-    (*vm)->DetachCurrentThread(vm);
-  }
-}
-void finish() {
-  if (!app)
-    return;
-  ANativeActivity_finish(app->activity);
-}
-#endif // DEBUG
-
 // native MainActivity.java
 JNIEXPORT void JNICALL Java_com_ariasaproject_gametemplate_MainActivity_insetNative(JNIEnv *UNUSED_ARG(env), jobject UNUSED_ARG(o), jint left, jint top, jint right, jint bottom) {
   if (!app) return;
-  float *ins = CAST(float*)malloc(sizeof(float)*4);
-  ins[0] = left;
-  ins[1] = top;
-  ins[2] = right;
-  ins[3] = bottom;
+  vec4 *ins = CAST(float*)malloc(sizeof(vec4));
+  ins->x = left;
+  ins->y = top;
+  ins->z = right;
+  ins->w = bottom;
   write_cmd(APP_CMD_WINDOW_RESIZE, CAST(void*)ins);
 }

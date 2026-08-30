@@ -7,7 +7,7 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSION OFF)
 set(CMAKE_COMPILE_WARNING_AS_ERROR ON)
 set(COMPILE_WARNING_AS_ERROR ON)
-set(CORE_SRC "${CMAKE_CURRENT_SOURCE_DIR}/../core/main")
+set(CORE_SRC ${CMAKE_CURRENT_SOURCE_DIR}/../core/main)
 
 add_compile_definitions(
     ANDROID_STL=c_static
@@ -20,7 +20,10 @@ add_compile_options(
 )
 add_link_options(-u ANativeActivity_onCreate)
 
-file(GLOB_RECURSE CoreSrc "${CORE_SRC}/main/**/*.c")
+file(GLOB_RECURSE CoreSrc ${CORE_SRC}/main/**/*.c)
+list(APPEND CoreSrc 
+    ${CMAKE_CURRENT_SOURCE_DIR}/c/assets.c
+)
 
 add_library(${PROJECT_NAME} SHARED
     ${CMAKE_CURRENT_SOURCE_DIR}/c/graphics/graphics.c

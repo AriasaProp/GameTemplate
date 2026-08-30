@@ -1,6 +1,9 @@
 #include "common.h"
+#include "assets.h"
+#include "graphics.h"
 #include "math/color.h"
-#include "graphics/graphics.h"
+#include "math/vector.h"
+#include "math/mat4.h"
 #include "log.h"
 
 #include <android/native_window.h>
@@ -11,18 +14,25 @@
 #include <GLES3/gl32.h>
 #include <EGL/egl.h>
 
-#define MAX_ASSET_READING 256
-#define MAX_UI_DRAW       200
-#define MAX_MSG           512
-#define check(X) do { \
-  X;\
-  for (GLenum error; (error = glGetError()); ) \
-    LOGE("Err %s 0x%x\n", X, error); \
-} while (0)
-
+#define MAX_MSG                512
 static GLint success;
 static GLchar msg[MAX_MSG];
 
+static void getErrorGL(const char *X) {
+  static GLenum error;
+  while ((error = glGetError()))
+    LOGE("Err %s 0x%x\n", X, error);
+}
+#define check(X) do { \
+  X; \
+  getErrorGL(#X); \
+} while (0)
+#define MAX_RESOURCE 256
+// mesh flags for uniform update
+enum {
+  MESH_VERTEX_DIRTY = 1,
+  MESH_INDEX_DIRTY = 2,
+};
 // flags global 2d/3d uniform update
 enum {
   UI_UPDATE      = 1 << 0,
@@ -36,15 +46,26 @@ enum {
   TERM_EGL_CONTEXT = 2,
   TERM_EGL_DISPLAY = 4,
 };
-static struct {
-  ANativeWindow *window;
+typedef struct {
+  GLuint id;
+  uvec2 size;
+  void *data;
+} opengles_texture;
+typedef struct {
+  GLuint vao, vbo, ibo;
+  int flags;
+  iter vertex_len, index_len;
+  mesh_vertex *vertexs;
+  mesh_index *indices;
+  mat4 trans;
+} opengles_mesh;
+static struct androidGraphics {
   EGLDisplay display;
   EGLSurface surface;
   EGLContext context;
   EGLConfig eConfig;
   int flags;
-  bool shader_valid;
-  
+
   struct {
     GLint shader, uniform_proj, uniform_tex;
     GLuint vao, vbo, ibo;
@@ -52,20 +73,189 @@ static struct {
   struct {
     GLint shader, uniform_proj, uniform_transProj;
   } world;
+
+  vec2 viewportSize; //
+  vec2 screenSize;   //
+  vec4 insets;
+
+  opengles_texture textures[MAX_RESOURCE];
+  opengles_mesh meshes[MAX_RESOURCE];
+  char *opengles_info_temp;
 } src = {0};
 
+// core implementation
+vec2 opengles_getScreenSize() { return src.screenSize; }
+vec2 opengles_toScreenCoordinate(const vec2 v) {
+  return CLIT(vec2) {
+    v.x -= src.insets.x,
+    src.viewportSize.y - v.y - src.insets.w
+  };
+}
+
+void opengles_clear(const int m) {
+  check(glClear(
+    (((m & GRAPHICS_CLEAR_COLOR) == GRAPHICS_CLEAR_COLOR) * GL_COLOR_BUFFER_BIT) |
+    (((m & GRAPHICS_CLEAR_DEPTH) == GRAPHICS_CLEAR_DEPTH) * GL_DEPTH_BUFFER_BIT) |
+    (((m & GRAPHICS_CLEAR_STENCIL) == GRAPHICS_CLEAR_STENCIL) * GL_STENCIL_BUFFER_BIT)));
+}
+void opengles_clearColor(const rgbaf c) {
+  check(glClearColor(c.r, c.g, c.b, c.a));
+}
+texture opengles_genTexture(const uvec2 size, void *data) {
+  texture i = 1;
+  while (i < MAX_RESOURCE) {
+    if (src.textures[i].size.x == 0)
+      break;
+    ++i;
+  }
+  if (i >= MAX_RESOURCE)
+    return 0; // reach limit texture total so return default texture
+  src.textures[i].size = size;
+  src.textures[i].data = data;
+  check(glGenTextures(1, &src.textures[i].id));
+  check(glBindTexture(GL_TEXTURE_2D, src.textures[i].id));
+  check(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
+  check(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, size.x, size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, data));
+  check(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+  check(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+  check(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+  check(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+  check(glBindTexture(GL_TEXTURE_2D, 0));
+  return i;
+}
+void opengles_bindTexture(const texture t) {
+  check(glBindTexture(GL_TEXTURE_2D, src.textures[t].id));
+}
+void opengles_setTextureParam(const int param, const int val) {
+  check(glTexParameteri(GL_TEXTURE_2D, param, val));
+}
+void opengles_deleteTexture(const texture t) {
+  check(glDeleteTextures(1, &src.textures[t].id));
+  free(src.textures[t].data);
+  memset((void *)(src.textures + t), 0, sizeof(opengles_texture));
+}
+void opengles_flatRender(const texture t, flat_vertex *v, const iter l) {
+  check(glDisable(GL_DEPTH_TEST));
+  check(glUseProgram(src.ui.shader));
+  if (src.flags & UI_UPDATE) {
+    check(glUniformMatrix4fv(src.ui.uniform_proj, 1, GL_FALSE, CLIT(float[]){
+      2.f / src.viewportSize.x, 0.f, 0.f, 0.f,
+      0.f, 2.f / src.viewportSize.y, 0.f, 0.f,
+      0.f, 0.f, 1.f, 0.f,
+        (2.0f * src.insets.x / src.viewportSize.x) - 1.0f,
+        (2.0f * src.insets.w / src.viewportSize.y) - 1.0f,
+        0.f, 1.f,
+    }));
+    src.flags &= ~UI_UPDATE;
+  }
+  check(glActiveTexture(GL_TEXTURE0));
+  check(glBindTexture(GL_TEXTURE_2D, src.textures[t].id));
+  check(glUniform1i(src.ui.uniform_tex, 0));
+  check(glBindVertexArray(src.ui.vao));
+  check(glBindBuffer(GL_ARRAY_BUFFER, src.ui.vbo));
+  check(glBufferSubData(GL_ARRAY_BUFFER, 0, 4 * l * sizeof(flat_vertex), (void *)v));
+  check(glDrawElements(GL_TRIANGLES, 6 * l, GL_UNSIGNED_SHORT, NULL));
+  check(glBindVertexArray(0));
+  check(glBindTexture(GL_TEXTURE_2D, 0));
+  check(glUseProgram(0));
+}
+mesh opengles_genMesh(mesh_vertex *v, const iter vl, mesh_index *i, const iter il) {
+  mesh m = 0;
+  while (m < MAX_RESOURCE) {
+    if (src.meshes[m].vertex_len == 0)
+      break;
+    ++m;
+  }
+  if (m >= MAX_RESOURCE)
+    return -1; // reach limit mesh total so return invalid number
+  src.meshes[m].vertex_len = vl;
+  src.meshes[m].vertexs = v;
+  src.meshes[m].index_len = il;
+  src.meshes[m].indices = i;
+  matrix4_idt(src.meshes[m].trans);
+
+  check(glGenVertexArrays(1, &src.meshes[m].vao));
+  check(glGenBuffers(2, &src.meshes[m].vbo));
+  check(glBindVertexArray(src.meshes[m].vao));
+  check(glBindBuffer(GL_ARRAY_BUFFER, src.meshes[m].vbo));
+  check(glBufferData(GL_ARRAY_BUFFER, vl * sizeof(mesh_vertex), (void *)v, GL_STATIC_DRAW));
+  check(glEnableVertexAttribArray(0));
+  check(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(mesh_vertex), (void *)0));
+  check(glEnableVertexAttribArray(1));
+  check(glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(mesh_vertex), (void *)sizeof(vec3)));
+  check(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, src.meshes[m].ibo));
+  check(glBufferData(GL_ELEMENT_ARRAY_BUFFER, il * sizeof(mesh_index), (void *)i, GL_STATIC_DRAW));
+  check(glBindVertexArray(0));
+  src.meshes[m].flags |= MESH_VERTEX_DIRTY | MESH_INDEX_DIRTY;
+  return m;
+}
+void opengles_setMeshTransform(const mesh ms, const mat4 mat) {
+  src.meshes[ms].trans = mat;
+}
+void opengles_meshRender(mesh *ms, const iter l) {
+  check(glEnable(GL_DEPTH_TEST));
+  check(glUseProgram(src.world.shader));
+  if (src.flags & WORLD_UPDATE) {
+    check(glUniformMatrix4fv(src.world.uniform_proj, 1, GL_FALSE, CLIT(float[]){
+      2.f / src.viewportSize.x, 0.f, 0.f, 0.f,
+      0.f, 2.f / src.viewportSize.y, 0.f, 0.f,
+      0.f, 0.f, 1.f, 0.f,
+      0.f, 0.f, 0.f, 1.f,
+    }));
+    src.flags &= ~WORLD_UPDATE;
+  }
+  for (iter i = 0; i < l; i++) {
+    opengles_mesh m = src.meshes[ms[i]];
+    check(glUniformMatrix4fv(src.world.uniform_transProj, 1, GL_FALSE, m.trans));
+    check(glBindVertexArray(m.vao));
+    if (m.flags & MESH_VERTEX_DIRTY) {
+      check(glBindBuffer(GL_ARRAY_BUFFER, m.vbo));
+      check(glBufferSubData(GL_ARRAY_BUFFER, 0, m.vertex_len * sizeof(mesh_vertex), (void *)m.vertexs));
+      m.flags &= ~MESH_VERTEX_DIRTY;
+    }
+    if (m.flags & MESH_INDEX_DIRTY) {
+      check(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m.ibo));
+      check(glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, m.index_len * sizeof(mesh_index), (void *)m.indices));
+      m.flags &= ~MESH_INDEX_DIRTY;
+    }
+    m.flags = 0;
+    check(glDrawElements(GL_TRIANGLES, m.index_len, GL_UNSIGNED_SHORT, NULL));
+  }
+  check(glBindVertexArray(0));
+  check(glUseProgram(0));
+}
+void opengles_deleteMesh(mesh m) {
+  check(glDeleteVertexArrays(1, &src.meshes[m].vao));
+  check(glDeleteBuffers(2, &src.meshes[m].vbo));
+  free(src.meshes[m].vertexs);
+  free(src.meshes[m].indices);
+  memset(src.meshes + m, 0, sizeof(opengles_mesh));
+}
+
 static void killEGL(const int EGLTermReq) {
-  if (!EGLTermReq || !src.display)
+  if (!EGLTermReq || (src.display == EGL_NO_DISPLAY))
     return;
-  if (src.shader_valid) {
-    // world
+  if (src.textures[0].id) {
+    // world draw
     check(glDeleteProgram(src.world.shader));
     // flat draw
     check(glDeleteProgram(src.ui.shader));
     check(glDeleteVertexArrays(1, &src.ui.vao));
     check(glDeleteBuffers(2, &src.ui.vbo));
-    // 
-    src.shader_valid = false;
+    // mesh
+    for (mesh i = 0; i < MAX_RESOURCE; ++i) {
+      if (src.meshes[i].vertex_len == 0)
+        continue;
+      check(glDeleteVertexArrays(1, &src.meshes[i].vao));
+      check(glDeleteBuffers(2, &src.meshes[i].vbo));
+    }
+    // texture
+    for (texture i = 0; i < MAX_RESOURCE; ++i) {
+      if (src.textures[i].size.x == 0)
+        continue;
+      check(glDeleteTextures(1, &src.textures[i].id));
+      src.textures[i].id = 0;
+    }
   }
   eglMakeCurrent(src.display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
   if (src.surface && (EGLTermReq & 5)) {
@@ -83,24 +273,24 @@ static void killEGL(const int EGLTermReq) {
     src.display = EGL_NO_DISPLAY;
   }
 }
-static void opengles_resize(bool s, uint *data) {
-  src.flags |= s ? RESIZE_DISPLAY : RESIZE_ONLY;
-  if (data) {
-    src.insets.x = data[0];
-    src.insets.y = data[1];
-    src.insets.z = data[2];
-    src.insets.w = data[3];
-    src.flags |= UI_UPDATE;
-  }
+// android purpose
+void opengles_invalidate(void) {
+  killEGL(TERM_EGL_SURFACE);
+}
+void opengles_resize(bool sys, vec4 ins) {
+  src.flags |= sys ? RESIZE_DISPLAY : RESIZE_ONLY;
+  src.insets = ins;
+  src.screenSize.x = src.viewportSize.x - ins.x - ins.z;
+  src.screenSize.y = src.viewportSize.y - ins.y - ins.w;
 }
 bool opengles_validate(ANativeWindow *window) {
-  if (!src.window || !src.display || !src.context || !src.surface) {
-    if (!src.window) src.window = window;
-    if (!src.display) {
-      src.context = EGL_NO_CONTEXT;
+  if (!window) return false;
+  if ((src.display == EGL_NO_DISPLAY) || (src.context == EGL_NO_CONTEXT) || (src.surface == EGL_NO_SURFACE)) {
+    if (src.display == EGL_NO_DISPLAY) {
       src.surface = EGL_NO_SURFACE;
+      src.context = EGL_NO_CONTEXT;
       src.display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
-      if (!src.display) {
+      if (src.display == EGL_NO_DISPLAY) {
         LOGW("Failed to get EGLDisplay");
         return false;
       }
@@ -143,16 +333,22 @@ bool opengles_validate(ANativeWindow *window) {
       } while ((++i) < j);
       free(configs);
     }
-    if (!src.context && !(src.context = eglCreateContext(src.display, src.eConfig, NULL, CLIT(EGLint[]){EGL_CONTEXT_CLIENT_VERSION, 3, EGL_NONE}))) {
-      LOGW("Failed to create EGLContext");
-      return false;
+    if (src.context == EGL_NO_CONTEXT) {
+      src.context = eglCreateContext(src.display, src.eConfig, NULL, CLIT(EGLint[]){EGL_CONTEXT_CLIENT_VERSION, 3, EGL_NONE});
+      if (src.context == EGL_NO_CONTEXT) {
+        LOGW("Failed to create EGLContext");
+        return false;
+      }
     }
-    if (!src.surface && !(src.surface = eglCreateWindowSurface(src.display, src.eConfig, src.window, NULL))) {
+    if ((src.surface == EGL_NO_SURFACE) &&
+        ((src.surface = eglCreateWindowSurface(src.display, src.eConfig, window, NULL)) == EGL_NO_SURFACE)
+       ) {
       LOGW("Failed to create EGLSurface");
       return false;
     }
     eglMakeCurrent(src.display, src.surface, src.surface, src.context);
-    if (!src.shader_valid) {
+    if (!src.textures[0].id) {
+
       // when validate, projection need to be update
       src.flags |= WORLD_UPDATE | UI_UPDATE;
       // set clear
@@ -169,9 +365,10 @@ bool opengles_validate(ANativeWindow *window) {
       check(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
       {
         const void *tempbuf;
-        void *ast;
-        size_t tempbufl;
+        asset ast;
+        iter tempbufl;
         GLuint vi, fi;
+        // flat draw
 #define checkLinkProgram(X) do { \
   glLinkProgram(X); \
   glGetProgramiv(X, GL_LINK_STATUS, &success); \
@@ -188,7 +385,6 @@ bool opengles_validate(ANativeWindow *window) {
     LOGE("Shader compile: %s", msg); \
   } \
 } while (0)
-        // flat draw
         {
           check(src.ui.shader = glCreateProgram());
           check(vi = glCreateShader(GL_VERTEX_SHADER));
@@ -249,8 +445,6 @@ bool opengles_validate(ANativeWindow *window) {
           check(src.world.uniform_proj = glGetUniformLocation(src.world.shader, "worldview_proj"));
           check(src.world.uniform_transProj = glGetUniformLocation(src.world.shader, "trans_proj"));
         }
-#undef checkLinkProgram
-#undef checkCompileShader
       }
       // texture
       // start from 0 to validate default texture
@@ -284,8 +478,6 @@ bool opengles_validate(ANativeWindow *window) {
         check(glBufferData(GL_ELEMENT_ARRAY_BUFFER, src.meshes[m].index_len * sizeof(mesh_index), (void *)src.meshes[m].indices, GL_STATIC_DRAW));
       }
       check(glBindVertexArray(0));
-      
-      src.shader_valid = true;
     }
     src.flags |= RESIZE_ONLY;
     src.flags &= ~RESIZE_DISPLAY;
@@ -307,31 +499,10 @@ bool opengles_validate(ANativeWindow *window) {
     src.flags |= WORLD_UPDATE | UI_UPDATE;
     src.flags &= ~RESIZE_ONLY;
   }
-  if (src.flags & (WORLD_UPDATE|UI_UPDATE)) {
-    mat4 m = MAT4_IDT;
-    m.m[0][0] = 2.f / src.viewportSize.x;
-    m.m[1][1] = 2.f / src.viewportSize.y;
-    if (src.flags & WORLD_UPDATE) {
-      check(glUseProgram(src.world.shader));
-      check(glUniformMatrix4fv(src.world.uniform_proj, 1, GL_FALSE, m.v));
-      src.flags &= ~WORLD_UPDATE;
-    }
-    check(glUseProgram(0));
-  }
   check(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT));
-  return 1;
+  return true;
 }
 void opengles_postRender(void) {
-  // ui render
-  if (src.flags & UI_UPDATE) {
-    check(glUseProgram(src.ui.shader));
-    m.m[3][0] = (2.f * src.insets.x / src.viewportSize.x) - 1.f;
-    m.m[3][1] = (2.f * src.insets.w / src.viewportSize.y) - 1.f;
-    check(glUniformMatrix4fv(src->ui.uniform_proj, 1, GL_FALSE, m.v));
-    src->flags &= ~UI_UPDATE;
-  }
-  check(glUseProgram(0));
-  
   if (!eglSwapBuffers(src.display, src.surface)) {
     switch (eglGetError()) {
     case EGL_BAD_SURFACE:
@@ -353,11 +524,34 @@ void opengles_postRender(void) {
     }
   }
 }
-void opengles_invalidate(void) {
-  killEGL(TERM_EGL_SURFACE);
-  src.window = NULL;
-}
-void opengles_destroy(void) {
+void opengles_term(void) {
   killEGL(TERM_EGL_DISPLAY);
-  memset(&src, 0, sizeof(src));
+  // texture
+  for (texture i = 0; i < MAX_RESOURCE; ++i) {
+    if (src.textures[i].size.x == 0)
+      continue;
+    free(src.textures[i].data);
+  }
+  // mesh
+  for (mesh i = 0; i < MAX_RESOURCE; ++i) {
+    if (src.meshes[i].vertex_len == 0)
+      continue;
+    free(src.meshes[i].vertexs);
+    free(src.meshes[i].indices);
+  }
+  if (src.opengles_info_temp) {
+    free(src.opengles_info_temp);
+  }
+  free(src);
+}
+
+int opengles_init(void) {
+  // add default texture
+  {
+    src.textures[0].size.x = 1;
+    src.textures[0].size.y = 1;
+    src.textures[0].data = malloc(4);
+    memset(src.textures[0].data, 0xff, 4);
+  }
+  return 1;
 }

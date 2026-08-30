@@ -7,8 +7,8 @@
  * 
  * *****************************************************************************/
 
-#ifndef _VECTOR_MATH_INCLUDED_
-#define _VECTOR_MATH_INCLUDED_
+#ifndef _VEC_MATH_INCLUDED_
+#define _VEC_MATH_INCLUDED_
 
 #include "common.h"
 
@@ -35,23 +35,23 @@ typedef PACKED(union) {
 	struct {  float __pad4; vec3 yzw; };
 } vec4;
 
-#define UVECTOR2_INIT(F) CLIT(uvec2){.x = (F), .y = (F)}
-#define UVECTOR2(X,Y)    CLIT(uvec2){.x = (X), .y = (Y)}
+#define UVEC2_INIT(F) CLIT(uvec2){.x = (F), .y = (F)}
+#define UVEC2(X,Y)    CLIT(uvec2){.x = (X), .y = (Y)}
 
-#define VECTOR2_ZERO    CLIT(vec2){0.0f, 0.0f}
-#define VECTOR2_ONE     CLIT(vec2){1.0f, 1.0f}
-#define VECTOR2_INIT(F) CLIT(vec2){ (F),  (F)}
-#define VECTOR2(X,Y)    CLIT(vec2){ (X),  (Y)}
+#define VEC2_ZERO    CLIT(vec2){0.0f, 0.0f}
+#define VEC2_ONE     CLIT(vec2){1.0f, 1.0f}
+#define VEC2_INIT(F) CLIT(vec2){ (F),  (F)}
+#define VEC2(X,Y)    CLIT(vec2){ (X),  (Y)}
 
-#define VECTOR3_ZERO    CLIT(vec3){0.0f, 0.0f, 0.0f}
-#define VECTOR3_ONE     CLIT(vec3){1.0f, 1.0f, 1.0f}
-#define VECTOR3_INIT(F) CLIT(vec3){ (F),  (F),  (F)}
-#define VECTOR3(X,Y,Z)  CLIT(vec3){ (X),  (Y),  (Z)}
+#define VEC3_ZERO    CLIT(vec3){0.0f, 0.0f, 0.0f}
+#define VEC3_ONE     CLIT(vec3){1.0f, 1.0f, 1.0f}
+#define VEC3_INIT(F) CLIT(vec3){ (F),  (F),  (F)}
+#define VEC3(X,Y,Z)  CLIT(vec3){ (X),  (Y),  (Z)}
 
-#define VECTOR4_ZERO     CLIT(vec4){0.0f, 0.0f, 0.0f, 0.0f}
-#define VECTOR4_ONE      CLIT(vec4){1.0f, 1.0f, 1.0f, 1.0f}
-#define VECTOR4_INIT(F)  CLIT(vec4){ (F),  (F),  (F),  (F)}
-#define VECTOR4(X,Y,Z,W) CLIT(vec4){ (X),  (Y),  (Z),  (W)}
+#define VEC4_ZERO     CLIT(vec4){0.0f, 0.0f, 0.0f, 0.0f}
+#define VEC4_ONE      CLIT(vec4){1.0f, 1.0f, 1.0f, 1.0f}
+#define VEC4_INIT(F)  CLIT(vec4){ (F),  (F),  (F),  (F)}
+#define VEC4(X,Y,Z,W) CLIT(vec4){ (X),  (Y),  (Z),  (W)}
 
 #ifdef __cplusplus
 extern "C" {
@@ -95,4 +95,4 @@ float vec2_rad(vec2, vec2);
 }
 #endif // __cplusplus
 
-#endif //_VECTOR_MATH_INCLUDED_
+#endif //_VEC_MATH_INCLUDED_
