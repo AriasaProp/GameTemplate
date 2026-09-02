@@ -1,3 +1,4 @@
+#include <math.h>
 #include "stb/local.h"
 #include "stb/image_write.h"
 #include "stb/zlib.h"
@@ -271,7 +272,7 @@ static void stbiw__linear_to_rgbe(ubyte *rgbe, float *linear) {
   if (maxcomp < 1e-32f) {
     rgbe[0] = rgbe[1] = rgbe[2] = rgbe[3] = 0;
   } else {
-    float normalize = (float)imath_frexp(maxcomp, &exponent) * 256.0f / maxcomp;
+    float normalize = (float)frexp(maxcomp, &exponent) * 256.0f / maxcomp;
 
     rgbe[0] = (ubyte)(linear[0] * normalize);
     rgbe[1] = (ubyte)(linear[1] * normalize);
@@ -419,7 +420,7 @@ static bool stbi_write_hdr_core(stbi__write_context *s, int x, int y, int comp, 
 //
 
 static ubyte stbiw__paeth(int a, int b, int c) {
-  int p = a + b - c, pa = imath_iabs(p - a), pb = imath_iabs(p - b), pc = imath_iabs(p - c);
+  int p = a + b - c, pa = abs(p - a), pb = abs(p - b), pc = abs(p - c);
   if (pa <= pb && pa <= pc)
     return (ubyte)(a);
   if (pb <= pc)
@@ -496,41 +497,41 @@ static inline int stbiw__encode_png_line_test(const ubyte *pixels, int w, int h,
   switch (mapping[filter_type + (y != 0) * 5]) {
   case 0:
     for (i = 0; (estimate < *est) && (i < w * n); ++i)
-      estimate += imath_iabs((byte)z[i]);
+      estimate += abs((byte)z[i]);
     break;
   case 1:
     for (i = 0; (estimate < *est) && (i < n); ++i)
-      estimate += imath_iabs((byte)z[i]);
+      estimate += abs((byte)z[i]);
     for (; (estimate < *est) && (i < w * n); ++i)
-      estimate += imath_iabs((byte)(z[i] - z[i - n]));
+      estimate += abs((byte)(z[i] - z[i - n]));
     break;
   case 2:
     for (i = 0; (estimate < *est) && (i < w * n); ++i)
-      estimate += imath_iabs((byte)(z[i] - z[i - signed_stride]));
+      estimate += abs((byte)(z[i] - z[i - signed_stride]));
     break;
   case 3:
     for (i = 0; (estimate < *est) && (i < n); ++i)
-      estimate += imath_iabs((byte)(z[i] - (z[i - signed_stride] >> 1)));
+      estimate += abs((byte)(z[i] - (z[i - signed_stride] >> 1)));
     for (; (estimate < *est) && (i < w * n); ++i)
-      estimate += imath_iabs((byte)(z[i] - ((z[i - n] + z[i - signed_stride]) >> 1)));
+      estimate += abs((byte)(z[i] - ((z[i - n] + z[i - signed_stride]) >> 1)));
     break;
   case 4:
     for (i = 0; (estimate < *est) && (i < n); ++i)
-      estimate += imath_iabs((byte)(z[i] - stbiw__paeth(0, z[i - signed_stride], 0)));
+      estimate += abs((byte)(z[i] - stbiw__paeth(0, z[i - signed_stride], 0)));
     for (; (estimate < *est) && (i < w * n); ++i)
-      estimate += imath_iabs((byte)(z[i] - stbiw__paeth(z[i - n], z[i - signed_stride], z[i - signed_stride - n])));
+      estimate += abs((byte)(z[i] - stbiw__paeth(z[i - n], z[i - signed_stride], z[i - signed_stride - n])));
     break;
   case 5:
     for (i = 0; (estimate < *est) && (i < n); ++i)
-      estimate += imath_iabs((byte)z[i]);
+      estimate += abs((byte)z[i]);
     for (; (estimate < *est) && (i < w * n); ++i)
-      estimate += imath_iabs((byte)(z[i] - (z[i - n] >> 1)));
+      estimate += abs((byte)(z[i] - (z[i - n] >> 1)));
     break;
   case 6:
     for (i = 0; (estimate < *est) && (i < n); ++i)
-      estimate += imath_iabs((byte)z[i]);
+      estimate += abs((byte)z[i]);
     for (; (estimate < *est) && (i < w * n); ++i)
-      estimate += imath_iabs((byte)(z[i] - stbiw__paeth(z[i - n], 0, 0)));
+      estimate += abs((byte)(z[i] - stbiw__paeth(z[i - n], 0, 0)));
     break;
   }
   bool res = *est > estimate;
