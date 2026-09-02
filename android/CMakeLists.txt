@@ -44,6 +44,7 @@ target_link_libraries(${PROJECT_NAME}
     android
     log
     m
+    c
 )
 
 add_library(${PROJECT_NAME}_gles SHARED
@@ -60,6 +61,7 @@ target_link_libraries(${PROJECT_NAME}_gles
     android
     log
     m
+    c
 )
 
 
