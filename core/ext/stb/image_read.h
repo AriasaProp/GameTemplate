@@ -2,7 +2,7 @@
 #define _STB_IMAGE_READ_INCLUDED_
 
 #include "common.h"
-#include "asset.h"
+#include "assets.h"
 
 typedef struct {
   int (*read)(void *user, char *data, int size); // fill 'data' with 'size' bytes.  return number of bytes actually read

@@ -1,4 +1,5 @@
 #include "graphics.h"
+#include <<dlfcn.h>
 
 static void *api = NULL;
 static ANativeWindow *window = NULL;
