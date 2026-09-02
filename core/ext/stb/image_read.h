@@ -14,10 +14,10 @@ typedef struct {
 extern "C" {
 #endif
 
-ubyte *stbi_read_asset(const asset, int *x, int *y, int *channels_in_file, int desired_channels);
-ubyte *stbi_read_memory(ubyte const *, int len, int *x, int *y, int *channels_in_file, int desired_channels);
-ubyte *stbi_read_callbacks(stbi_io_callbacks const *clbk, void *user, int *x, int *y, int *channels_in_file, int desired_channels);
-ubyte *stbi_read(char const *filename, int *x, int *y, int *channels_in_file, int desired_channels);
+ubyte *stbi_read_asset(const char*, int *, int *, int *, int );
+ubyte *stbi_read_memory(ubyte const *, int, int *, int *, int *, int);
+ubyte *stbi_read_callbacks(stbi_io_callbacks const *, void *, int *, int *, int *, int);
+ubyte *stbi_read(char const *, int *, int *, int *, int);
 
 #ifndef STBI_NO_GIF
 ubyte *stbi_read_gif_from_memory(ubyte const *buffer, int len, int **delays, int *x, int *y, int *z, int *comp, int req_comp);

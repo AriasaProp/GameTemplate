@@ -6,6 +6,7 @@
 #include "stb/image_read.h"
 #include "stb/zlib.h"
 
+#include <stdio.h>
 #include <math.h>
 #include <stddef.h> // ptrdiff_t on osx
 
@@ -99,10 +100,10 @@ static int  stbi__stdio_read(void *user, char *data, int size) {
   return fread(data, size, (FILE *)user);
 }
 static void stbi__stdio_skip(void *user, int n) {
-  fseek(n, (FILE *)user);
+  fseek((FILE *)user, n);
 }
 static bool stbi__stdio_eof (void *user) {
-  return feof((FILE *)user);
+  return !!feof((FILE *)user);
 }
 static stbi_io_callbacks stbi__stdio_callbacks = {
   stbi__stdio_read,
@@ -495,7 +496,7 @@ ubyte *stbi_read(char const *filename, int *x, int *y, int *comp, int req_comp) 
   result = stbi__read_and_postprocess_8bit(&s, x, y, comp, req_comp);
   if (result) {
     // need to 'unget' all the characters in the IO buffer
-    fseek(-(int)(s.img_buffer_end - s.img_buffer), f);
+    fseek(f, -(int)(s.img_buffer_end - s.img_buffer));
   }
   fclose(f);
   return result;
@@ -511,7 +512,7 @@ ushrt *stbi_read_16(char const *filename, int *x, int *y, int *comp, int req_com
   result = stbi__read_and_postprocess_16bit(&s, x, y, comp, req_comp);
   if (result) {
     // need to 'unget' all the characters in the IO buffer
-    fseek(-(int)(s.img_buffer_end - s.img_buffer), f);
+    fseek(f, -(int)(s.img_buffer_end - s.img_buffer));
   }
   fclose(f);
   return result;
@@ -645,7 +646,7 @@ int stbi_is_hdr(char const *filename) {
     stbi__context s;
     stbi__start_callbacks(&s, &stbi__stdio_callbacks, (void *)f);
     result = stbi__hdr_test(&s);
-    frewind(f);
+    rewind(f);
 #else
     UNUSED(f);
     result = 0;
@@ -6541,10 +6542,8 @@ int stbi_info(char const *filename, int *x, int *y, int *comp) {
   if (!f)
     return stbi__err("can't fopen : Unable to open file");
   stbi__context s;
-  long pos = ftell(f);
   stbi__start_callbacks(&s, &stbi__stdio_callbacks, (void *)f);
   result = stbi__info_main(&s, x, y, comp);
-  fseek(pos, f);
   fclose(f);
   return result;
 }
