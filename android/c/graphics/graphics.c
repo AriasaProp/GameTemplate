@@ -126,7 +126,7 @@ void graphics_bindTexture(const texture t) {
 void graphics_setTextureParam(const int x, const int y) {
   if (api) engine.setTextureParam(x, y);
 }
-void graphics_deleteTexture(const texture t);
+void graphics_deleteTexture(const texture t) {
   if (api) engine.deleteTexture(t);
 }
 void graphics_flatRender(const texture t, flat_vertex *v, const iter i) {

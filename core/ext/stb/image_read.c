@@ -96,11 +96,11 @@ static void stbi__start_callbacks(stbi__context *s, stbi_io_callbacks *c, void *
   s->img_buffer_original_end = s->img_buffer_end;
 }
 
-static int  stbi__stdio_read(void *user, char *data, int size) {
-  return fread(data, size, (FILE *)user);
+static int  stbi__stdio_read(void *user, char *data, iter size) {
+  return fread(data, size, 1, (FILE *)user);
 }
 static void stbi__stdio_skip(void *user, int n) {
-  fseek((FILE *)user, n);
+  fseek((FILE *)user, n, SEEK_CUR);
 }
 static bool stbi__stdio_eof (void *user) {
   return !!feof((FILE *)user);
@@ -496,7 +496,7 @@ ubyte *stbi_read(char const *filename, int *x, int *y, int *comp, int req_comp) 
   result = stbi__read_and_postprocess_8bit(&s, x, y, comp, req_comp);
   if (result) {
     // need to 'unget' all the characters in the IO buffer
-    fseek(f, -(int)(s.img_buffer_end - s.img_buffer));
+    fseek(f, -(int)(s.img_buffer_end - s.img_buffer), SEEK_CUR);
   }
   fclose(f);
   return result;
@@ -512,7 +512,7 @@ ushrt *stbi_read_16(char const *filename, int *x, int *y, int *comp, int req_com
   result = stbi__read_and_postprocess_16bit(&s, x, y, comp, req_comp);
   if (result) {
     // need to 'unget' all the characters in the IO buffer
-    fseek(f, -(int)(s.img_buffer_end - s.img_buffer));
+    fseek(f, -(int)(s.img_buffer_end - s.img_buffer), SEEK_CUR);
   }
   fclose(f);
   return result;
