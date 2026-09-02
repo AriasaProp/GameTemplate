@@ -15,7 +15,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "graphics/graphics.h"
+#include "graphics.h"
 #include "common.h"
 #include "main.h"
 #include "log.h"

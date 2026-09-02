@@ -106,7 +106,7 @@ void androidGraphics_destroy(void) {
 
 
 vec2 graphics_getScreen(void) {
-  if (api) engine.getScreen();
+  return api ? engine.getScreen() : VEC2_ZERO;
 }
 vec2 graphics_toScreen(const vec2 v) {
   return api ? engine.toScreen(v) : VEC2_ZERO;

@@ -18,21 +18,21 @@ typedef union {
 } uvec2;
 typedef union {
 	float v[2];
-	PACKED(struct) { float x, y; };
+	struct { float x, y; };
 } vec2;
-typedef PACKED(union) {
+typedef union {
 	float v[3];
-	PACKED(struct) { float x, y, z; };
-	PACKED(struct) { vec2 xy; float __pad1; };
-	PACKED(struct) { float __pad2; vec2 yz; };
+	struct { float x, y, z; };
+	struct { vec2 xy; float __pad1; };
+	struct { float __pad2; vec2 yz; };
 } vec3;
 typedef union {
 	float v[4];
-	PACKED(struct) { float x, y, z, w; };
-	PACKED(struct) { vec2 xy, zw; };
-	PACKED(struct) { float __pad1; vec2 yz; float __pad2; };
-	PACKED(struct) { vec3 xyz; float __pad3; };
-	PACKED(struct) {  float __pad4; vec3 yzw; };
+	struct { float x, y, z, w; };
+	struct { vec2 xy, zw; };
+	struct { float __pad1; vec2 yz; float __pad2; };
+	struct { vec3 xyz; float __pad3; };
+	struct {  float __pad4; vec3 yzw; };
 } vec4;
 
 #define UVEC2_INIT(F) CLIT(uvec2){.x = (F), .y = (F)}

@@ -1,0 +1,61 @@
+/* *****************************************************************************
+ * hash.h v0.0.0000
+ * 
+ * Hashing algorithm list
+ *  - MD5
+ *
+ *  - SHA1
+ *  - SHA224
+ *  - SHA256
+ *  - SHA384
+ *  - SHA512
+ * 
+ * 
+ * *****************************************************************************/
+
+#ifndef _HASH_FUNCTION_
+#define _HASH_FUNCTION_
+
+#include "common.h"
+#include "array/dstring.h"
+
+#if (defined(BYTE_ORDER) && (BYTE_ORDER == LITTLE_ENDIAN)) || \
+    (defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)) || \
+    defined(MANUAL_CHECK_LITTLE_ENDIAN)
+  #define BYTE_FLIP
+#else
+  #error "Need byte order manual check and define with MANUAL_CHECK_LITTLE_ENDIAN"
+#endif
+
+#define HASH128_IN_BYTES  16
+#define HASH160_IN_BYTES  20
+#define HASH224_IN_BYTES  28
+#define HASH256_IN_BYTES  32
+#define HASH384_IN_BYTES  48
+#define HASH512_IN_BYTES  64
+
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
+// return 0 on valid hex string
+int  hash_cstr_to_ubyte(ubyte*, const char *,iter);
+void hash_ubyte_append_dstring(dstring*, const ubyte*, iter);
+// run hash on valid input will never fail
+void hash_md5         (uint32*, const char *, uint64);
+void hash_sha1        (uint32*, const char *, uint64);
+void hash_sha224      (uint32*, const char *, uint64);
+void hash_sha256      (uint32*, const char *, uint64);
+void hash_sha384      (uint64*, const char *, uint64);
+void hash_sha512      (uint64*, const char *, uint64);
+
+void hash_crc32_start  (uint32*);
+void hash_crc32_append (uint32*,const ubyte);
+void hash_crc32_appends(uint32*,const void*, iter);
+void hash_crc32_end    (uint32*);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // _HASH_FUNCTION_
