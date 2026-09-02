@@ -8,8 +8,14 @@ typedef struct {
   stbrp_coord w, h, x, y;
 } stbrp_rect;
 
-#ifndef _STB_RECTPACK_IMPLEMENTATION_
-extern int stbrp_pack_rects(stbrp_rect *rects, int num_rects, int width, int height);
-#endif // _STB_RECTPACK_IMPLEMENTATION_
+#ifdef __cplusplus
+extern  "C" {
+#endif // __cplusplus
+
+int stbrp_pack_rects(stbrp_rect *, int, int, int);
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus
 
 #endif // _STB_RECTPACK_INCLUDED_

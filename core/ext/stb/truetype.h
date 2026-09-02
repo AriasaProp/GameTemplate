@@ -1,5 +1,6 @@
 #ifndef __STB_INCLUDE_STB_TRUETYPE_H__
 #define __STB_INCLUDE_STB_TRUETYPE_H__
+
 #include "common.h"
 #include "math/vector.h"
 //     the 'macStyle' header field; i don't know if fonts set this consistently

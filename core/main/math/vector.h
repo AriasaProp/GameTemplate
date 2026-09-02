@@ -64,9 +64,23 @@ typedef union {
 extern "C" {
 #endif // __cplusplus
 
+bool ivec2_is0(const ivec2);
+
+bool uvec2_is0(const uvec2);
+
+bool vec2_is0(const vec2);
+bool vec3_is0(const vec3);
+bool vec4_is0(const vec4);
+
+ivec2 ivec2_add(const ivec2, const ivec2);
+
 vec2 vec2_add(const vec2, const vec2);
 vec3 vec3_add(const vec3, const vec3);
 vec4 vec4_add(const vec4, const vec4);
+
+ivec2 ivec2_sub(const ivec2, const ivec2);
+
+void ivec2_msub(ivec2 *, const ivec2);
 
 vec2 vec2_sub(const vec2, const vec2);
 vec3 vec3_sub(const vec3, const vec3);

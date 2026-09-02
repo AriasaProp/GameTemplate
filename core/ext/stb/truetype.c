@@ -1,4 +1,3 @@
-#define STB_TRUTYPE_IMPLEMENTATION
 #include "stb/truetype.h"
 #include "stb/rectpack.h"
 #include <string.h>
@@ -2680,7 +2679,7 @@ unsigned char *stbtt_GetGlyphBitmapSubpixel(const stbtt_fontinfo *info, vec2 sca
     ivec2 ip0;
     stbtt_GetGlyphBitmapBoxSubpixel(info, glyph, scale, shift, &ip0, &(gbm.size));
     // now we get the size
-    ivec2_subs(&(gbm.size), ip0);
+    ivec2_msub(&(gbm.size), ip0);
     if (out_size) *out_size = gbm.size;
     if (off) *off = ip0;
     if (!IVEC2_IS0((&gbm.size))) {
@@ -3001,7 +3000,7 @@ int stbtt_BakeFontBitmap(const unsigned char *data, int offset, float pixel_heig
     g = stbtt_FindGlyphIndex(&f, first_char + i);
     stbtt_GetGlyphHMetrics(&f, g, &advance, &lsb);
     stbtt_GetGlyphBitmapBox(&f, g, scale, &ip, &(gbm.size));
-    ivec2_subs(&(gbm.size), ip);
+    ivec2_msub(&(gbm.size), ip);
     if ((st.x + gbm.size.x) >= (pw - 1)) {
       // advance to next row
       st.y = bottom_y;

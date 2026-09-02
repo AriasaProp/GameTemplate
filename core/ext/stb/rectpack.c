@@ -1,6 +1,6 @@
-#define _STB_RECTPACK_IMPLEMENTATION_
-#include "stb/rectpack.h"
 #include "common.h"
+#include "math/vector.h"
+#include "stb/rectpack.h"
 
 enum {
   STBRP_HEURISTIC_Skyline_BL_sortHeight = 0,
