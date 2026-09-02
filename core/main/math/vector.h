@@ -17,6 +17,10 @@ typedef union {
 	PACKED(struct) { uint x, y; };
 } uvec2;
 typedef union {
+	int u[2];
+	PACKED(struct) { int x, y; };
+} ivec2;
+typedef union {
 	float v[2];
 	struct { float x, y; };
 } vec2;
@@ -34,6 +38,9 @@ typedef union {
 	struct { vec3 xyz; float __pad3; };
 	struct {  float __pad4; vec3 yzw; };
 } vec4;
+
+#define IVEC2_INIT(F) CLIT(ivec2){.x = (F), .y = (F)}
+#define IVEC2(X,Y)    CLIT(ivec2){.x = (X), .y = (Y)}
 
 #define UVEC2_INIT(F) CLIT(uvec2){.x = (F), .y = (F)}
 #define UVEC2(X,Y)    CLIT(uvec2){.x = (X), .y = (Y)}

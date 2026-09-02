@@ -1,7 +1,7 @@
 #ifndef __STB_INCLUDE_STB_TRUETYPE_H__
 #define __STB_INCLUDE_STB_TRUETYPE_H__
 #include "common.h"
-#include "math/vec.h"
+#include "math/vector.h"
 //     the 'macStyle' header field; i don't know if fonts set this consistently
 #define STBTT_MACSTYLE_DONTCARE   0
 #define STBTT_MACSTYLE_BOLD       1
@@ -104,7 +104,7 @@ typedef struct {
   unsigned char type, padding;
 } stbtt_vertex;
 typedef struct {
-  uivec2 p0, p1; // coordinates of bbox in bitmap
+  uvec2 p0, p1; // coordinates of bbox in bitmap
   float xadvance;
   vec2 off;
 } stbtt_bakedchar;
@@ -113,7 +113,7 @@ typedef struct {
   vec2 p1, q1; // bottom-right
 } stbtt_aligned_quad;
 typedef struct {
-  uivec2 p0, p1; // coordinates of bbox in bitmap
+  uvec2 p0, p1; // coordinates of bbox in bitmap
   vec2 off, off2;
   float xadvance;
 } stbtt_packedchar;

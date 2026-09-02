@@ -535,7 +535,7 @@ ubyte *stbi_read_memory(ubyte const *buffer, int len, int *x, int *y, int *comp,
   stbi__start_mem(&s, buffer, len);
   return stbi__read_and_postprocess_8bit(&s, x, y, comp, req_comp);
 }
-static int  stbi__asset_read(void *user, char *data, int size) {
+static int  stbi__asset_read(void *user, char *data, iter size) {
   return assetRead(CAST(asset)user, data, size);
 }
 static void stbi__asset_skip(void *user, int n) {
@@ -3341,7 +3341,7 @@ static int stbi__jpeg_info(stbi__context *s, int *x, int *y, int *comp) {
   free(j);
   return result;
 }
-#endif
+#endif // STBI_NO_JPEG
 
 // public domain "baseline" PNG decoder   v0.10  Sean Barrett 2006-11-18
 //    simple implementation

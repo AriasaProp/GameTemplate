@@ -965,7 +965,7 @@ static bool stbi_write_jpg_core(stbi__write_context *s, int width, int height, i
 // most static
 
 static void image_io_write(void *usr, void *data, iter size) {
-  fwrite(data, size, CAST(FILE*)usr);
+  fwrite(data, size, 1, CAST(FILE*)usr);
 }
 static void image_mem_write(void *usr, void *data, iter size) {
   image_file *imf = CAST(image_file*)usr;
