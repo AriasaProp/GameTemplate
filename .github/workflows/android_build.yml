@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/android_build.yml'
       - 'android/**'
+      - 'core/**'
 
 jobs:
   android-build:

@@ -1,5 +1,7 @@
 #include "graphics.h"
-#include <<dlfcn.h>
+#include "log.h"
+#include <dlfcn.h>
+#include <android/native_window.h>
 
 static void *api = NULL;
 static ANativeWindow *window = NULL;
@@ -131,7 +133,7 @@ void graphics_flatRender(const texture t, flat_vertex *v, const iter i) {
   if (api) engine.flatRender(t,v,i);
 }
 mesh graphics_genMesh(mesh_vertex *v, const iter vi, mesh_index *i, const iter ii) {
-  return api ? engine.genMesh(v,vi,ii,i) : 0;
+  return api ? engine.genMesh(v,vi,i,ii) : 0;
 }
 void graphics_setMeshTransform(const mesh m, const mat4 mat) {
   if (api) engine.setMeshTransform(m, mat);

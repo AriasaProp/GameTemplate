@@ -1,6 +1,7 @@
 #include <android/configuration.h>
 #include <android/looper.h>
 #include <android/native_activity.h>
+#include <android/native_window.h>
 #include <android/asset_manager.h>
 
 #include <errno.h>

@@ -13,15 +13,15 @@
 #include "common.h"
 
 
-typedef PACKED(struct) { float r, g, b; } rgbf;
+typedef struct { float r, g, b; } rgbf;
 typedef union {
-	PACKED(struct) { float r, g, b, a; };
-	PACKED(struct) { rgbf rgb; float __pad_alpha_; };
+	struct { float r, g, b, a; };
+	struct { rgbf rgb; float __pad_alpha_; };
 } rgbaf;
 typedef struct { float h, s, v; } hsv;
 typedef union {
-	PACKED(struct) { float h, s, v, a; };
-	PACKED(struct) { hsv rgb; float __pad_alpha_; };
+	struct { float h, s, v, a; };
+	struct { hsv rgb; float __pad_alpha_; };
 } hsva;
 typedef struct { ubyte r, g, b; } rgb_u;
 typedef union {

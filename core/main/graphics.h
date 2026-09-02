@@ -3,6 +3,7 @@
 
 #include "math/vector.h"
 #include "math/color.h"
+#include "math/mat4.h"
 #define MAX_ASSET_READING 256
 #define MAX_UI_DRAW       200
 
@@ -33,7 +34,7 @@ extern void graphics_setTextureParam(const int, const int);
 extern void graphics_deleteTexture(const texture);
 extern void graphics_flatRender(const texture, flat_vertex*, const iter);
 extern mesh graphics_genMesh(mesh_vertex*, const iter, mesh_index*, const iter);
-extern void graphics_setMeshTransform(const mesh, float*);
+extern void graphics_setMeshTransform(const mesh, const mat4);
 extern void graphics_meshRender(mesh*, const iter);
 extern void graphics_deleteMesh(const mesh);
 
