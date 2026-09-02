@@ -6,6 +6,7 @@
 #include "stb/image_read.h"
 #include "stb/zlib.h"
 
+#include <math.h>
 #include <stddef.h> // ptrdiff_t on osx
 
 // for image formats that explicitly notate that they have premultiplied alpha,
@@ -1043,7 +1044,7 @@ static float *stbi__ldr_to_hdr(ubyte *data, int x, int y, int comp) {
     n = comp - 1;
   for (i = 0; i < x * y; ++i) {
     for (k = 0; k < n; ++k) {
-      output[i * comp + k] = (float)(imath_pow(data[i * comp + k] / 255.0f, stbi__l2h_gamma) * stbi__l2h_scale);
+      output[i * comp + k] = (float)(pow(data[i * comp + k] / 255.0f, stbi__l2h_gamma) * stbi__l2h_scale);
     }
   }
   if (n < comp) {
@@ -1075,7 +1076,7 @@ static ubyte *stbi__hdr_to_ldr(float *data, int x, int y, int comp) {
     n = comp - 1;
   for (i = 0; i < x * y; ++i) {
     for (k = 0; k < n; ++k) {
-      float z = (float)imath_pow(data[i * comp + k] * stbi__h2l_scale_i, stbi__h2l_gamma_i) * 255 + 0.5f;
+      float z = (float)pow(data[i * comp + k] * stbi__h2l_scale_i, stbi__h2l_gamma_i) * 255 + 0.5f;
       if (z < 0)
         z = 0;
       if (z > 255)
@@ -5935,7 +5936,7 @@ static void stbi__hdr_convert(float *output, ubyte *input, int req_comp) {
   if (input[3] != 0) {
     float f1;
     // Exponent
-    f1 = (float)imath_ldexp(1.0f, input[3] - (int)(128 + 8));
+    f1 = CAST(float)ldexp(1.0f, input[3] - CAST(int)(128 + 8));
     if (req_comp <= 2)
       output[0] = (input[0] + input[1] + input[2]) * f1 / 3;
     else {

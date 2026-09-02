@@ -174,9 +174,18 @@ extern "C" {
 #endif // __cplusplus
 
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(_WIN64)
 int convert_wchar_to_utf8(char *, iter, const wchar_t *);
 #endif // _WIN32
+
+ubyte  imath_flip8 (ubyte);
+ushrt  imath_flip16(ushrt);
+uint32 imath_flip32(uint32);
+uint64 imath_flip64(uint64);
+int32  imath_rotl32(int32, const iter);
+int64  imath_rotl64(int64, const iter);
+int32  imath_rotr32(int32, const iter);
+int64  imath_rotr64(int64, const iter);
 
 #ifdef __cplusplus
 }
