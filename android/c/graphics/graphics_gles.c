@@ -80,14 +80,13 @@ static struct androidGraphics {
 
   opengles_texture textures[MAX_RESOURCE];
   opengles_mesh meshes[MAX_RESOURCE];
-  char *opengles_info_temp;
 } src = {0};
 
 // core implementation
-vec2 opengles_getScreenSize() { return src.screenSize; }
-vec2 opengles_toScreenCoordinate(const vec2 v) {
+vec2 opengles_getScreen(void) { return src.screenSize; }
+vec2 opengles_toScreen(const vec2 v) {
   return CLIT(vec2) {
-    v.x -= src.insets.x,
+    v.x - src.insets.x,
     src.viewportSize.y - v.y - src.insets.w
   };
 }
@@ -172,7 +171,7 @@ mesh opengles_genMesh(mesh_vertex *v, const iter vl, mesh_index *i, const iter i
   src.meshes[m].vertexs = v;
   src.meshes[m].index_len = il;
   src.meshes[m].indices = i;
-  matrix4_idt(src.meshes[m].trans);
+  src.meshes[m].trans = MAT4_IDT;
 
   check(glGenVertexArrays(1, &src.meshes[m].vao));
   check(glGenBuffers(2, &src.meshes[m].vbo));
@@ -206,7 +205,7 @@ void opengles_meshRender(mesh *ms, const iter l) {
   }
   for (iter i = 0; i < l; i++) {
     opengles_mesh m = src.meshes[ms[i]];
-    check(glUniformMatrix4fv(src.world.uniform_transProj, 1, GL_FALSE, m.trans));
+    check(glUniformMatrix4fv(src.world.uniform_transProj, 1, GL_FALSE, m.trans.v));
     check(glBindVertexArray(m.vao));
     if (m.flags & MESH_VERTEX_DIRTY) {
       check(glBindBuffer(GL_ARRAY_BUFFER, m.vbo));
@@ -388,15 +387,15 @@ bool opengles_validate(ANativeWindow *window) {
         {
           check(src.ui.shader = glCreateProgram());
           check(vi = glCreateShader(GL_VERTEX_SHADER));
-          ast = global_engine.assetBuffer("shaders/flatdraw.vert", &tempbuf, &tempbufl);
+          ast = assetBuffer("shaders/flatdraw.vert", &tempbuf, &tempbufl);
           check(glShaderSource(vi, 1, (const GLchar **)&tempbuf, (const GLint *)&tempbufl));
-          global_engine.assetClose(ast);
+          assetClose(ast);
           checkCompileShader(vi);
           check(glAttachShader(src.ui.shader, vi));
           check(fi = glCreateShader(GL_FRAGMENT_SHADER));
-          ast = global_engine.assetBuffer("shaders/flatdraw.frag", &tempbuf, &tempbufl);
+          ast = assetBuffer("shaders/flatdraw.frag", &tempbuf, &tempbufl);
           check(glShaderSource(fi, 1, (const GLchar **)&tempbuf, (const GLint *)&tempbufl));
-          global_engine.assetClose(ast);
+          assetClose(ast);
           checkCompileShader(fi);
           check(glAttachShader(src.ui.shader, fi));
           checkLinkProgram(src.ui.shader);
@@ -428,15 +427,15 @@ bool opengles_validate(ANativeWindow *window) {
         {
           check(src.world.shader = glCreateProgram());
           check(vi = glCreateShader(GL_VERTEX_SHADER));
-          ast = global_engine.assetBuffer("shaders/worlddraw.vert", &tempbuf, &tempbufl);
+          ast = assetBuffer("shaders/worlddraw.vert", &tempbuf, &tempbufl);
           check(glShaderSource(vi, 1, (const GLchar **)&tempbuf, (const GLint *)&tempbufl));
-          global_engine.assetClose(ast);
+          assetClose(ast);
           checkCompileShader(vi);
           check(glAttachShader(src.world.shader, vi));
           check(fi = glCreateShader(GL_FRAGMENT_SHADER));
-          ast = global_engine.assetBuffer("shaders/worlddraw.frag", &tempbuf, &tempbufl);
+          ast = assetBuffer("shaders/worlddraw.frag", &tempbuf, &tempbufl);
           check(glShaderSource(fi, 1, (const GLchar **)&tempbuf, (const GLint *)&tempbufl));
-          global_engine.assetClose(ast);
+          assetClose(ast);
           checkCompileShader(fi);
           check(glAttachShader(src.world.shader, fi));
           checkLinkProgram(src.world.shader);
@@ -542,7 +541,7 @@ void opengles_term(void) {
   if (src.opengles_info_temp) {
     free(src.opengles_info_temp);
   }
-  free(src);
+  memset(&src, 0, sizeof(src));
 }
 
 int opengles_init(void) {

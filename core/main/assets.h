@@ -4,11 +4,12 @@
 #include "common.h"
 
 typedef void *asset;
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
 
-void *assetBuffer(const char *, const void **, iter *);
+asset assetBuffer(const char *, const void **, iter *);
 asset openAsset  (const char *);
 int   assetRead  (asset, void *, iter);
 void  assetSeek  (asset, int);

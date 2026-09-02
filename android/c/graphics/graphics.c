@@ -1,4 +1,4 @@
-#include "graphics/graphics.h"
+#include "graphics.h"
 
 static void *api = NULL;
 static ANativeWindow *window = NULL;
@@ -106,7 +106,7 @@ vec2 graphics_getScreen(void) {
   if (api) engine.getScreen();
 }
 vec2 graphics_toScreen(const vec2 v) {
-  return api ? engine.toScreen(v) : CLIT(vec2){0};
+  return api ? engine.toScreen(v) : VEC2_ZERO;
 }
 void graphics_clear(const int flag) {
   if (api) engine.clear(flag);

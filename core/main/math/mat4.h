@@ -15,10 +15,10 @@
 #define MAT4_IDT CLIT(mat4){1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f}
 #define MAT4(A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P) CLIT(mat4){(A),(B),(C),(D),(E),(F),(G),(H),(I),(J),(K),(L),(M),(N),(O),(P)}
 
-typedef PACKED(union) {
+typedef union {
 	float v[16];
 	float m[4][4];
-	struct {
+	PACKED(struct) {
 		float m00, m10, m20, m30;
 		float m01, m11, m21, m31;
 		float m02, m12, m22, m32;

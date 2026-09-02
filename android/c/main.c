@@ -16,6 +16,7 @@
 
 #include "graphics/graphics.h"
 #include "common.h"
+#include "main.h"
 #include "log.h"
 // assets
 extern void androidAsset_init(AAssetManager*);
@@ -138,20 +139,20 @@ static void onProcessCmd() {
     case APP_CMD_PAUSE:
     case APP_CMD_STOP:
     case APP_CMD_DESTROY:
-      // pause
+      main_pause();
       break;
     case APP_CMD_WINDOW_RESIZE:
     case APP_CMD_CONTENT_RECT_CHANGED:
       // resize
     default:
-      // update
+      main_update();
       break;
   }
 }
 static void postProcessCmd() {
   switch (app->delayed_cmdState) {
     case APP_CMD_DESTROY:
-      app->stateApp &= ~STATE_APP_INIT;
+      app->stateApp &= ~STATE_APP_INITIAL;
     case APP_CMD_STOP:
       app->stateApp &= ~STATE_APP_STARTING;
       androidAsset_term();
@@ -174,7 +175,7 @@ static void *main_entry(void *param) {
   // initialize
   androidGraphics_initial();
 
-  app->stateApp = STATE_APP_INIT;
+  app->stateApp = STATE_APP_INITIAL;
 
   while (app->stateApp) {
     if (ALooper_pollOnce((app->stateApp != STATE_APP_READY) * -1, NULL, NULL, NULL) == ALOOPER_POLL_ERROR)

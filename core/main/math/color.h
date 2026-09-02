@@ -10,7 +10,7 @@
 #ifndef _COLOR_MATH_INCLUDED_
 #define _COLOR_MATH_INCLUDED_
 
-#include "common.h
+#include "common.h"
 
 
 typedef PACKED(struct) { float r, g, b; } rgbf;
@@ -18,12 +18,12 @@ typedef union {
 	PACKED(struct) { float r, g, b, a; };
 	PACKED(struct) { rgbf rgb; float __pad_alpha_; };
 } rgbaf;
-typedef PACKED(struct) { float h, s, v; } hsv;
+typedef struct { float h, s, v; } hsv;
 typedef union {
 	PACKED(struct) { float h, s, v, a; };
 	PACKED(struct) { hsv rgb; float __pad_alpha_; };
 } hsva;
-typedef PACKED(struct) { ubyte r, g, b; } rgb_u;
+typedef struct { ubyte r, g, b; } rgb_u;
 typedef union {
 	uint32 u;
 	PACKED(struct) { ubyte r, g, b, a; };

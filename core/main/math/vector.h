@@ -12,27 +12,27 @@
 
 #include "common.h"
 
-typedef PACKED(union) {
+typedef union {
 	uint u[2];
-	struct { uint x, y; };
+	PACKED(struct) { uint x, y; };
 } uvec2;
-typedef PACKED(union) {
+typedef union {
 	float v[2];
-	struct { float x, y; };
+	PACKED(struct) { float x, y; };
 } vec2;
 typedef PACKED(union) {
 	float v[3];
-	struct { float x, y, z; };
-	struct { vec2 xy; float __pad1; };
-	struct { float __pad2; vec2 yz; };
+	PACKED(struct) { float x, y, z; };
+	PACKED(struct) { vec2 xy; float __pad1; };
+	PACKED(struct) { float __pad2; vec2 yz; };
 } vec3;
-typedef PACKED(union) {
+typedef union {
 	float v[4];
-	struct { float x, y, z, w; };
-	struct { vec2 xy, zw; };
-	struct { float __pad1; vec2 yz; float __pad2; };
-	struct { vec3 xyz; float __pad3; };
-	struct {  float __pad4; vec3 yzw; };
+	PACKED(struct) { float x, y, z, w; };
+	PACKED(struct) { vec2 xy, zw; };
+	PACKED(struct) { float __pad1; vec2 yz; float __pad2; };
+	PACKED(struct) { vec3 xyz; float __pad3; };
+	PACKED(struct) {  float __pad4; vec3 yzw; };
 } vec4;
 
 #define UVEC2_INIT(F) CLIT(uvec2){.x = (F), .y = (F)}
@@ -57,39 +57,43 @@ typedef PACKED(union) {
 extern "C" {
 #endif // __cplusplus
 
-vec2 vec2_add(vec2, vec2);
-vec3 vec3_add(vec3, vec3);
-vec4 vec4_add(vec4, vec4);
+vec2 vec2_add(const vec2, const vec2);
+vec3 vec3_add(const vec3, const vec3);
+vec4 vec4_add(const vec4, const vec4);
 
-vec2 vec2_sub(vec2, vec2);
-vec3 vec3_sub(vec3, vec3);
-vec4 vec4_sub(vec4, vec4);
+vec2 vec2_sub(const vec2, const vec2);
+vec3 vec3_sub(const vec3, const vec3);
+vec4 vec4_sub(const vec4, const vec4);
 
-vec2 vec2_diff(vec2, vec2);
-vec3 vec3_diff(vec3, vec3);
-vec4 vec4_diff(vec4, vec4);
+vec2 vec2_diff(const vec2, const vec2);
+vec3 vec3_diff(const vec3, const vec3);
+vec4 vec4_diff(const vec4, const vec4);
 
-vec2 vec2_mul(vec2, float);
-vec3 vec3_mul(vec3, float);
-vec4 vec4_mul(vec4, float);
+vec2 vec2_mul(const vec2, const float);
+vec3 vec3_mul(const vec3, const float);
+vec4 vec4_mul(const vec4, const float);
 
-vec2 vec2_div(vec2, float);
-vec3 vec3_div(vec3, float);
-vec4 vec4_div(vec4, float);
+vec2 vec2_mulv(const vec2, const vec2);
+vec3 vec3_mulv(const vec3, const vec3);
+vec4 vec4_mulv(const vec4, const vec4);
 
-float vec2_dist(vec2, vec2);
-float vec3_dist(vec3, vec3);
-float vec4_dist(vec4, vec4);
+vec2 vec2_div(const vec2, const float);
+vec3 vec3_div(const vec3, const float);
+vec4 vec4_div(const vec4, const float);
 
-vec2 vec2_norm(vec2);
-vec3 vec3_norm(vec3);
-vec4 vec4_norm(vec4);
+float vec2_dist(const vec2, const vec2);
+float vec3_dist(const vec3, const vec3);
+float vec4_dist(const vec4, const vec4);
 
-float vec2_dot(vec2, vec2);
-float vec3_dot(vec3, vec3);
-float vec4_dot(vec4, vec4);
+vec2 vec2_norm(const vec2);
+vec3 vec3_norm(const vec3);
+vec4 vec4_norm(const vec4);
 
-float vec2_rad(vec2, vec2);
+float vec2_dot(const vec2, const vec2);
+float vec3_dot(const vec3, const vec3);
+float vec4_dot(const vec4, const vec4);
+
+float vec2_rad(const vec2, const vec2);
 
 #ifdef __cplusplus
 }
