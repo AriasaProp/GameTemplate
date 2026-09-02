@@ -40,7 +40,11 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${CORE}/ext
     ${CORE}/main
 )
-target_link_libraries(${PROJECT_NAME} android log m)
+target_link_libraries(${PROJECT_NAME}
+    android
+    log
+    m
+)
 
 add_library(${PROJECT_NAME}_gles SHARED
     ${HERE}/graphics/graphics_gles.c
@@ -50,6 +54,12 @@ target_include_directories(${PROJECT_NAME}_gles PRIVATE
     ${HERE}
     ${CORE}/main
 )
-target_link_libraries(${PROJECT_NAME}_gles EGL GLESv3 android log m)
+target_link_libraries(${PROJECT_NAME}_gles
+    EGL
+    GLESv3
+    android
+    log
+    m
+)
 
 
