@@ -2675,14 +2675,14 @@ unsigned char *stbtt_GetGlyphBitmapSubpixel(const stbtt_fontinfo *info, vec2 sca
   stbtt__bitmap gbm = {0};
   stbtt_vertex *vertices = NULL;
   int num_verts = stbtt_GetGlyphShape(info, glyph, &vertices);
-  if (VEC2_IS0((&scale)) && ((scale.x * scale.y) != 0.0f)) {
+  if (vec2_is0((&scale)) && ((scale.x * scale.y) != 0.0f)) {
     ivec2 ip0;
     stbtt_GetGlyphBitmapBoxSubpixel(info, glyph, scale, shift, &ip0, &(gbm.size));
     // now we get the size
     ivec2_msub(&(gbm.size), ip0);
     if (out_size) *out_size = gbm.size;
     if (off) *off = ip0;
-    if (!IVEC2_IS0((&gbm.size))) {
+    if (!ivec2_is0((&gbm.size))) {
       gbm.pixels = (unsigned char *)malloc(gbm.size.x * gbm.size.y);
       if (gbm.pixels) {
         gbm.stride = gbm.size.x;
@@ -2701,7 +2701,7 @@ void stbtt_MakeGlyphBitmapSubpixel(const stbtt_fontinfo *info, stbtt__bitmap gbm
   stbtt_vertex *vertices;
   int num_verts = stbtt_GetGlyphShape(info, glyph, &vertices);
   stbtt_GetGlyphBitmapBoxSubpixel(info, glyph, scale, shift, &ip, NULL);
-  if (IVEC2_IS0((&(gbm.size)))) stbtt_Rasterize(&gbm, 0.35f, vertices, num_verts, scale, shift, ip, 1, info->userdata);
+  if (ivec2_is0((&(gbm.size)))) stbtt_Rasterize(&gbm, 0.35f, vertices, num_verts, scale, shift, ip, 1, info->userdata);
   free(vertices);
 }
 void stbtt_MakeGlyphBitmap(const stbtt_fontinfo *info, stbtt__bitmap gbm, vec2 scale, int glyph) {
@@ -2780,7 +2780,7 @@ void stbtt_GetPackedQuad(const stbtt_packedchar *chardata, ivec2 p, int char_ind
 }
 unsigned char *stbtt_GetGlyphSDF(const stbtt_fontinfo *info, float scl, int glyph, int padding, unsigned char onedge_value, float pixel_dist_scale, ivec2 *out_size, ivec2 *off) {
   if (!scl) return NULL;
-  vec2 scale = VEC2_SQR(scl);
+  vec2 scale = VEC2_F(scl);
   ivec2 ip0, ip1, size;
   unsigned char *data;
   stbtt_GetGlyphBitmapBoxSubpixel(info, glyph, scale, VEC2_ZERO, &ip0, &ip1);
@@ -2991,9 +2991,9 @@ int stbtt_BakeFontBitmap(const unsigned char *data, int offset, float pixel_heig
   if (!stbtt_InitFont(&f, data, offset))
     return -1;
   memset(pixels, 0, pw * ph); // background of 0 around pixels
-  ivec2 st = (ivec2){1,1}, ip, testv;
+  ivec2 st = IVEC2_I(1), ip, testv;
   bottom_y = 1;
-  vec2 scale = VEC2_SQR(stbtt_ScaleForPixelHeight(&f, pixel_height));
+  vec2 scale = VEC2_F(stbtt_ScaleForPixelHeight(&f, pixel_height));
   int advance,lsb, g;
   stbtt__bitmap gbm = { .stride = pw };
   for (i = 0; i < num_chars; ++i) {
