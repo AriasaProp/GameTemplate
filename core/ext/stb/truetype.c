@@ -1,6 +1,7 @@
 #include "stb/truetype.h"
 #include "stb/rectpack.h"
 #include <string.h>
+#include <math.h>
 
 #define STBTT_MAX_OVERSAMPLE 256
 
@@ -2640,12 +2641,12 @@ void stbtt_GetGlyphBitmapBoxSubpixel(const stbtt_fontinfo *font, int glyph, vec2
   } else {
     // move to integral bboxes (treating pixels as little squares, what pixels get touched)?
     if (ip0){
-      ip0->x = (int)floor(x0 * scale.x + shift.x);
-      ip0->y = (int)floor(-y1 * scale.y + shift.y);
+      ip0->x = (int)floorf(x0 * scale.x + shift.x);
+      ip0->y = (int)floorf(-y1 * scale.y + shift.y);
     }
     if (ip1) {
-      ip1->x = (int)ceil(x1 * scale.x + shift.x);
-      ip1->y = (int)ceil(-y0 * scale.y + shift.y);
+      ip1->x = (int)ceilf(x1 * scale.x + shift.x);
+      ip1->y = (int)ceilf(-y0 * scale.y + shift.y);
     }
   }
 }
@@ -2675,14 +2676,14 @@ unsigned char *stbtt_GetGlyphBitmapSubpixel(const stbtt_fontinfo *info, vec2 sca
   stbtt__bitmap gbm = {0};
   stbtt_vertex *vertices = NULL;
   int num_verts = stbtt_GetGlyphShape(info, glyph, &vertices);
-  if (vec2_is0((&scale)) && ((scale.x * scale.y) != 0.0f)) {
+  if (vec2_is0(scale) && ((scale.x * scale.y) != 0.0f)) {
     ivec2 ip0;
     stbtt_GetGlyphBitmapBoxSubpixel(info, glyph, scale, shift, &ip0, &(gbm.size));
     // now we get the size
     ivec2_msub(&(gbm.size), ip0);
     if (out_size) *out_size = gbm.size;
     if (off) *off = ip0;
-    if (!ivec2_is0((&gbm.size))) {
+    if (!ivec2_is0(gbm.size)) {
       gbm.pixels = (unsigned char *)malloc(gbm.size.x * gbm.size.y);
       if (gbm.pixels) {
         gbm.stride = gbm.size.x;
@@ -2701,7 +2702,7 @@ void stbtt_MakeGlyphBitmapSubpixel(const stbtt_fontinfo *info, stbtt__bitmap gbm
   stbtt_vertex *vertices;
   int num_verts = stbtt_GetGlyphShape(info, glyph, &vertices);
   stbtt_GetGlyphBitmapBoxSubpixel(info, glyph, scale, shift, &ip, NULL);
-  if (ivec2_is0((&(gbm.size)))) stbtt_Rasterize(&gbm, 0.35f, vertices, num_verts, scale, shift, ip, 1, info->userdata);
+  if (ivec2_is0((gbm.size))) stbtt_Rasterize(&gbm, 0.35f, vertices, num_verts, scale, shift, ip, 1, info->userdata);
   free(vertices);
 }
 void stbtt_MakeGlyphBitmap(const stbtt_fontinfo *info, stbtt__bitmap gbm, vec2 scale, int glyph) {
@@ -2739,7 +2740,7 @@ void stbtt_GetBakedQuad(const stbtt_bakedchar *chardata, ivec2 sz, int char_inde
   const stbtt_bakedchar *b = chardata + char_index;
   q->p0 = vec2_add(*pos, b->off);
   vec2_maddf(&(q->p0), 0.5f);
-  vec2_floors(&(q->p0));
+  vec2_mfloor(&(q->p0));
   q->p1 = q->p0;
   vec2_maddf(&(q->p0),d3d_bias);
   vec2_madd(&(q->p1), VEC2(b->p1.x,b->p1.y));
