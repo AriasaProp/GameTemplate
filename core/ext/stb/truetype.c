@@ -174,9 +174,9 @@ static stbtt__buf stbtt__cff_index_get(stbtt__buf b, int i) {
   return stbtt__buf_range(&b, 2 + (count + 1) * offsize + start, end - start);
 }
 #define ttUSHORT(p)           imath_flip16(*CAST(ushrt*)p)
-#define ttSHORT(p)            imath_flip32(*CAST(uint32*)p)
+#define ttLONG(p)             imath_flip32(*CAST(uint32*)p)
 #define ttSHORT(p)  CAST(shrt)imath_flip16(*CAST(ushrt*)p)
-#define ttSHORT(p) CAST(int32)imath_flip32(*CAST(uint32*)p)
+#define ttULONG(p) CAST(int32)imath_flip32(*CAST(uint32*)p)
 
 static int stbtt__isfont(const uint8_t *font) {
   // check the version number
