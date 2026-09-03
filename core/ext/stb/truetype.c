@@ -2738,16 +2738,16 @@ void stbtt_GetBakedQuad(const stbtt_bakedchar *chardata, ivec2 sz, int char_inde
   float d3d_bias = opengl_fillrule ? 0 : -0.5f;
   const stbtt_bakedchar *b = chardata + char_index;
   q->p0 = vec2_add(*pos, b->off);
-  vec2_addsf(&(q->p0), 0.5f);
+  vec2_maddf(&(q->p0), 0.5f);
   vec2_floors(&(q->p0));
   q->p1 = q->p0;
-  vec2_addsf(&(q->p0),d3d_bias);
-  vec2_adds(&(q->p1), (vec2){b->p1.x,b->p1.y});
-  vec2_subs(&(q->p1), (vec2){b->p0.x,b->p0.y});
-  vec2_addsf(&(q->p1), d3d_bias);
-  vec2 ipz = (vec2){sz.x, sz.y};
-  q->q0 = vec2_div((vec2){b->p0.x,b->p0.y}, ipz);
-  q->q1 = vec2_div((vec2){b->p1.x,b->p1.y}, ipz);
+  vec2_maddf(&(q->p0),d3d_bias);
+  vec2_madd(&(q->p1), VEC2(b->p1.x,b->p1.y));
+  vec2_msub(&(q->p1), VEC2(b->p0.x,b->p0.y));
+  vec2_maddf(&(q->p1), d3d_bias);
+  vec2 ipz = VEC2(sz.x, sz.y);
+  q->q0 = vec2_div(VEC2(b->p0.x,b->p0.y), ipz);
+  q->q1 = vec2_div(VEC2(b->p1.x,b->p1.y), ipz);
   pos->x += b->xadvance;
 }
 void stbtt_GetScaledFontVMetrics(const unsigned char *fontdata, int index, float size, float *ascent, float *descent, float *lineGap) {
@@ -2765,17 +2765,17 @@ void stbtt_GetPackedQuad(const stbtt_packedchar *chardata, ivec2 p, int char_ind
   const stbtt_packedchar *b = chardata + char_index;
   if (align_to_integer) {
     q->p0 = vec2_add(*pos, b->off);
-    vec2_addsf(&(q->p0), 0.5f);
-    vec2_floors(&(q->p0));
+    vec2_maddf(&(q->p0), 0.5f);
+    vec2_mfloor(&(q->p0));
     q->p1 = vec2_add(q->p0, b->off2);
-    vec2_subs(&(q->p1), b->off);
+    vec2_msub(&(q->p1), b->off);
   } else {
     q->p0 = vec2_add(*pos, b->off);
     q->p1 = vec2_add(*pos, b->off2);
   }
-  vec2 ip = (vec2){p.x, p.y};
-  q->q0 = vec2_div((vec2){b->p0.x,b->p0.y}, ip);
-  q->q1 = vec2_div((vec2){b->p1.x,b->p1.y}, ip);
+  vec2 ip = VEC2(p.x, p.y);
+  q->q0 = vec2_div(VEC2(b->p0.x,b->p0.y), ip);
+  q->q1 = vec2_div(VEC2(b->p1.x,b->p1.y), ip);
   pos->x += b->xadvance;
 }
 unsigned char *stbtt_GetGlyphSDF(const stbtt_fontinfo *info, float scl, int glyph, int padding, unsigned char onedge_value, float pixel_dist_scale, ivec2 *out_size, ivec2 *off) {
