@@ -173,26 +173,11 @@ static stbtt__buf stbtt__cff_index_get(stbtt__buf b, int i) {
   end = stbtt__buf_get(&b, offsize);
   return stbtt__buf_range(&b, 2 + (count + 1) * offsize + start, end - start);
 }
-static uint16_t ttUSHORT(const uint8_t *p) {
-  uint16_t r = *(uint16_t*)p;
-  flipBytes((uint8_t *)&r,2);
-  return r;
-}
-static int16_t ttSHORT(const uint8_t *p) {
-  int16_t r = *(int16_t*)p;
-  flipBytes((uint8_t *)&r,2);
-  return r;
-}
-static uint32_t ttULONG(const uint8_t *p) {
-  uint32_t r = *(uint32_t*)p;
-  flipBytes((uint8_t *)&r,4);
-  return r;
-}
-static int32_t ttLONG(const uint8_t *p) {
-  int32_t r = *(int32_t*)p;
-  flipBytes((uint8_t *)&r,4);
-  return r;
-}
+#define ttUSHORT(p)           imath_flip16(*CAST(ushrt*)p)
+#define ttSHORT(p)            imath_flip32(*CAST(uint32*)p)
+#define ttSHORT(p)  CAST(shrt)imath_flip16(*CAST(ushrt*)p)
+#define ttSHORT(p) CAST(int32)imath_flip32(*CAST(uint32*)p)
+
 static int stbtt__isfont(const uint8_t *font) {
   // check the version number
   if (stbtt_tag4(font, '1', 0, 0, 0))
